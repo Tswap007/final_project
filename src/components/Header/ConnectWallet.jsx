@@ -5,6 +5,7 @@ export function ConnectWallet() {
     return (
         <Box
             display="flex"
+            position='relative'
             width="199.111px"
             height="58px"
             padding="13px 31px"
@@ -15,6 +16,7 @@ export function ConnectWallet() {
             borderRadius="24px"
             background="#5FC95D"
             boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
+            zIndex={2}
         >
             <MyStyledText>CONNECT WALLET</MyStyledText>
         </Box>

@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Divider } from './Divider'
 import Noise from '../../bg/noise.svg'
+import { Cloud1 } from '../Header/Cloud';
 
 
 export function Section1() {

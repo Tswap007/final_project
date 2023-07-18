@@ -23,7 +23,7 @@ export function Header() {
             <LinkAnimation href=''><Logo /></LinkAnimation>
             <NavLink />
             <LinkAnimation><ConnectWallet /></LinkAnimation>
-            <Cloud1 />
+            <Cloud1 mt="70.58px" position="absolute" right='30px' top='5px' />
         </Box>
     );
 }

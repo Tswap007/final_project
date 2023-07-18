@@ -15,6 +15,7 @@ export function NavLink() {
             borderRadius="24px"
             background="#FFF"
             boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
+            zIndex={2}
         >
             <Link><MyStyledText>HOME</MyStyledText></Link>
             <Link><MyStyledText>COMPOSE AND MINT</MyStyledText></Link>
