@@ -1,11 +1,10 @@
-import Cloud from '../assets/cloud1.svg';
 import { Box, Image } from '@chakra-ui/react';
 
-export function Cloud1({ mt, position, right, top }) {
+export function Cloud({ mt, position, right, top, src }) {
     return (
         <Box style={{ pointerEvents: "none" }}>
             <Image
-                src={Cloud}
+                src={src}
                 width="318.958px"
                 height="205.2px"
                 flexShrink={0}

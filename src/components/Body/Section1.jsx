@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { Divider } from './Divider'
+import { DividerR } from './DividerR'
 import Noise from '../../bg/noise.svg'
-import { Cloud1 } from '../Header/Cloud';
+import { Cloud } from '../Header/Cloud';
 
 
 export function Section1() {
@@ -10,16 +11,20 @@ export function Section1() {
             <Box
                 bg="#7C89FF"
                 backgroundImage={Noise}
+                position='relative'
                 display={{ base: 'block', md: 'flex' }} // Display as block on small screens, flex on medium screens and above
                 flexDirection={{ base: 'column', md: 'row' }} // Stack vertically on small screens, align horizontally on medium screens and above
                 justifyContent="space-between"
                 px={4}
                 py={2}
                 pl={0}
+                pr={0}
                 mt={0}
                 height="762px"
             >
                 <Divider />
+                <DividerR />
+
             </Box>
         </>
     );

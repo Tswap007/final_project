@@ -4,7 +4,8 @@ import { Logo } from './Logo';
 import { ConnectWallet } from './ConnectWallet';
 import { LinkAnimation } from './LinkAnimation';
 import Noise from '../../bg/noise.svg';
-import { Cloud1 } from './Cloud';
+import { Cloud } from './Cloud';
+import Cloud1 from '../assets/cloud1.svg';
 
 export function Header() {
     return (
@@ -23,7 +24,7 @@ export function Header() {
             <LinkAnimation href=''><Logo /></LinkAnimation>
             <NavLink />
             <LinkAnimation><ConnectWallet /></LinkAnimation>
-            <Cloud1 mt="70.58px" position="absolute" right='30px' top='5px' />
+            <Cloud src={Cloud1} mt="70.58px" position="absolute" right='30px' top='5px' />
         </Box>
     );
 }
