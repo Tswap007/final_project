@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { NavLink } from './NavLink';
 import { Logo } from './Logo';
 import { ConnectWallet } from './ConnectWallet';
@@ -9,7 +9,7 @@ import Cloud1 from '../assets/cloud1.svg';
 
 export function Header() {
     return (
-        <Box
+        <Flex
             position="relative" // Set the position of the container to relative
             bg="#7C89FF"
             backgroundImage={Noise}
@@ -25,7 +25,7 @@ export function Header() {
             <NavLink />
             <LinkAnimation><ConnectWallet /></LinkAnimation>
             <Cloud src={Cloud1} mt="70.58px" position="absolute" right='30px' top='5px' />
-        </Box>
+        </Flex>
     );
 }
 
