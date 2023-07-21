@@ -1,5 +1,4 @@
 import { Box } from '@chakra-ui/react';
-import { MyStyledText } from './Text';
 
 export function ConnectWallet() {
     return (

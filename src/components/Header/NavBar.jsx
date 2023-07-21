@@ -3,7 +3,6 @@ import logo from "../assets/LOGO_full.svg";
 import Noise from '../../bg/noise.svg';
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { ConnectWallet } from "./ConnectWallet";
 
 function Logo(props) {
     return (
@@ -49,17 +48,15 @@ function MenuLinks({ isOpen }) {
     );
 }
 
-function MenuLinksBox(...props) {
+function MenuLinksBox({ children, ...rest }) {
     return (
         <Box
             display={{ base: 'none', md: 'block' }}
-            width="50%"
             flexShrink={0}
             borderRadius="24px"
-            background="#FFF"
             boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
             zIndex={2}
-            {...props}
+            {...rest}
         >
             <HStack
                 spacing={12}
@@ -71,40 +68,15 @@ function MenuLinksBox(...props) {
                 letterSpacing="2px"
                 textTransform="uppercase"
             >
-                <MenuItem to="/">Home</MenuItem>
-                <MenuItem to="/mint">Compose and Mint</MenuItem>
-                <MenuItem to="/governance">Governance</MenuItem>
-                <MenuItem to="/explore">Explore</MenuItem>
+                {children}
             </HStack>
         </Box>
     )
 }
 
 //try to use the menulinkbox for this and not repeat code
-//also increase heigth
-function ConnectButton() {
-    return (
-        <Box
-            display={{ base: 'none', md: 'block' }}
-            width="15%"
-            borderRadius="24px"
-            background="#5FC95D"
-            boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
-            zIndex={2}
-            spacing={12}
-            align="center"
-            justify='center'
-            fontStyle="normal"
-            fontWeight={600}
-            lineHeight="normal"
-            letterSpacing="2px"
-            textTransform="uppercase"
-        >
-            <MenuItem>Connect wallet</MenuItem>
-
-        </Box>
-    )
-}
+//also increase height of the box to add a bit more asthetics 
+//next order of buisness is to add the clouds
 
 const NavBarContainer = ({ children, ...props }) => {
     return (
@@ -139,8 +111,13 @@ export default function NavBar(props) {
             <Logo width={["100px", "170px"]} height='auto' />
             <MenuToggle toggle={toggle} isOpen={isOpen} />
             <MenuLinks isOpen={isOpen} />
-            <MenuLinksBox />
-            <ConnectButton />
+            <MenuLinksBox background="#FFF" width="50%">
+                <MenuItem to="/">Home</MenuItem>
+                <MenuItem to="/mint">Compose and Mint</MenuItem>
+                <MenuItem to="/governance">Governance</MenuItem>
+                <MenuItem to="/explore">Explore</MenuItem>
+            </MenuLinksBox>
+            <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
         </NavBarContainer>
     )
 }
