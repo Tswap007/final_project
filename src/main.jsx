@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import '@fontsource/amatic-sc';
+import '@fontsource/gemunu-libre'
 
 const theme = extendTheme({
   fonts: {
     body: 'amatic-sc, sans-serif',
-    // Add more font definitions if needed
+    heading: 'gemunu-libre, sans-serif',
   },
 });
 

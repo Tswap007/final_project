@@ -21,9 +21,9 @@ export function Header() {
             py={2}
             height="auto"
         >
-            <LinkAnimation href=''><Logo /></LinkAnimation>
+            <Logo />
             <NavLink />
-            <LinkAnimation><ConnectWallet /></LinkAnimation>
+            {/* <LinkAnimation><ConnectWallet /></LinkAnimation> */}
             <Cloud src={Cloud1} mt="70.58px" position="absolute" right='30px' top='5px' />
         </Flex>
     );

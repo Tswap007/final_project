@@ -7,6 +7,8 @@ import { MyStyledBodyText } from './Text';
 import Background from '../assets/s1bg.svg'
 import { SectionImage } from './SectionImage';
 import textTop from '../assets/texttop.svg';
+import HeaderText from './HeaderText';
+import { SectionButton } from './SectionButton';
 
 
 export function Section1() {
@@ -19,12 +21,13 @@ export function Section1() {
                 display={{ base: 'block', md: 'flex' }} // Display as block on small screens, flex on medium screens and above
                 flexDirection={{ base: 'column', md: 'row' }} // Stack vertically on small screens, align horizontally on medium screens and above
                 justifyContent="space-between"
-                height="762px"
+                height="589px"
             >
                 <Divider />
                 <Cloud src={Cloud2} position='absolute' mt='13.58px' right='363px' top='5px' />
-                <MyStyledBodyText position="absolute" mt="273px" pl="40px" >
+                <MyStyledBodyText position="absolute" mt="110px" pl="40px" >
                     <Image src={textTop} w='222px' h='50px' pl={70} />
+                    <HeaderText>CUSTOMIZE</HeaderText>
                     <Text>Lorem ipsum dolor sit amet, consectetur</Text>
                     <Text>adipiscing elit, sed do eiusmod tempor </Text>
                     <Text>incididunt ut labore et dolore magna aliqua.</Text>
@@ -34,6 +37,7 @@ export function Section1() {
                     <Text>aute irure dolor in reprehenderit in voluptate </Text>
                     <Text>velit esse cillum dolore eu fun.</Text>
                 </MyStyledBodyText>
+                <SectionButton />
                 <SectionImage />
             </Flex>
         </>

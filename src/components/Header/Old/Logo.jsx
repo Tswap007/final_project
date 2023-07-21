@@ -6,8 +6,8 @@ export function Logo() {
         <Image
             src={logo}
             alt="Logo"
-            width="218px"
-            height="150"
+            width={["150px", "218px"]}
+            height='auto'
             pb={2}
             flexShrink={0}
             align="center"

@@ -4,7 +4,7 @@ import { MyStyledText } from './Text';
 export function NavLink() {
     return (
         <Box
-            display="flex"
+            display={{ base: "none", md: "flex" }} // box will not display on smaller screens
             width="696px"
             height="58px"
             padding="13px 15px"
