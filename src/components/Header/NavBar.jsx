@@ -90,6 +90,20 @@ function Clouds({ src, ...props }) {
     )
 }
 
+function Divider() { //might remove this but lets see for now
+    return (
+        <Box
+            height="0px"
+            width="100%"
+            position="absolute"
+            bottom={1}
+            left={0}
+            borderBottom="1px solid #E1D8B0"
+        />
+    );
+}
+
+
 const NavBarContainer = ({ children, ...props }) => {
     return (
         <Flex
@@ -131,7 +145,8 @@ export default function NavBar(props) {
             </MenuLinksBox>
             <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
             <Clouds src={cloud} top={4} right={4} width={["40%", "30%"]} />
-            <Clouds src={cloud2} top={4} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
+            <Clouds src={cloud2} top={3} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
+            <Divider />
         </NavBarContainer>
     )
 }
