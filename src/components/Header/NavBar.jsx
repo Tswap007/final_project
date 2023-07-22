@@ -1,6 +1,8 @@
 import { Box, IconButton, Image, Link, Text, Flex, Stack, Center, HStack } from "@chakra-ui/react";
 import logo from "../assets/LOGO_full.svg";
 import Noise from '../../bg/noise.svg';
+import cloud from "../assets/cloud1.svg";
+import cloud2 from "../assets/cloud2.svg";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
@@ -14,7 +16,7 @@ function Logo(props) {
 
 function MenuToggle({ toggle, isOpen }) {
     return (
-        <Box display={{ base: "block", md: "none" }} onClick={toggle} >
+        <Box display={{ base: "block", md: "block", lg: "none" }} onClick={toggle} zIndex={1}>
             {isOpen ? <IconButton icon={<CloseIcon />} /> : <IconButton icon={<HamburgerIcon />} />}
         </Box>
     );
@@ -22,15 +24,16 @@ function MenuToggle({ toggle, isOpen }) {
 
 function MenuItem({ children, to = "/", ...rest }) {
     return (
-        <Link display="block" href={to}> <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']}  {...rest} >{children}</Text> </Link>
+        <Link display="block" href={to} > <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']}  {...rest} >{children}</Text> </Link>
     )
 }
 
 function MenuLinks({ isOpen }) {
     return (
         <Box
-            display={{ base: isOpen ? 'block' : 'none', md: 'none' }}
+            display={{ base: isOpen ? 'block' : 'none', md: isOpen ? 'block' : 'none', lg: "none" }}
             flexBasis={{ base: '100%', md: 'auto' }}
+            zIndex={1}
         >
             <Stack
                 spacing={8}
@@ -51,11 +54,12 @@ function MenuLinks({ isOpen }) {
 function MenuLinksBox({ children, ...rest }) {
     return (
         <Box
-            display={{ base: 'none', md: 'block' }}
+            display={{ base: 'none', md: 'none', lg: "block" }}
             flexShrink={0}
             borderRadius="24px"
             boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
             zIndex={2}
+            height="50px"
             {...rest}
         >
             <HStack
@@ -67,6 +71,7 @@ function MenuLinksBox({ children, ...rest }) {
                 lineHeight="normal"
                 letterSpacing="2px"
                 textTransform="uppercase"
+                height="100%"
             >
                 {children}
             </HStack>
@@ -74,9 +79,16 @@ function MenuLinksBox({ children, ...rest }) {
     )
 }
 
-//try to use the menulinkbox for this and not repeat code
-//also increase height of the box to add a bit more asthetics 
-//next order of buisness is to add the clouds
+function Clouds({ src, ...props }) {
+    return (
+        <Box
+            position="absolute"
+            zIndex={0}
+            {...props}>
+            <Image src={src} width="100%" height="auto" />
+        </Box>
+    )
+}
 
 const NavBarContainer = ({ children, ...props }) => {
     return (
@@ -90,7 +102,7 @@ const NavBarContainer = ({ children, ...props }) => {
             p={8}
             bg="#7C89FF"
             backgroundImage={Noise}
-            color={["white", "white", "black", "black"]}
+            color={["white", "white", "White", "black"]}
             {...props}
         >
             {children}
@@ -108,7 +120,7 @@ export default function NavBar(props) {
 
     return (
         <NavBarContainer {...props}>
-            <Logo width={["100px", "170px"]} height='auto' />
+            <Logo width={["100px", "190px"]} height='auto' />
             <MenuToggle toggle={toggle} isOpen={isOpen} />
             <MenuLinks isOpen={isOpen} />
             <MenuLinksBox background="#FFF" width="50%">
@@ -118,6 +130,8 @@ export default function NavBar(props) {
                 <MenuItem to="/explore">Explore</MenuItem>
             </MenuLinksBox>
             <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
+            <Clouds src={cloud} top={4} right={4} width={["40%", "30%"]} />
+            <Clouds src={cloud2} top={4} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
         </NavBarContainer>
     )
 }
