@@ -112,7 +112,6 @@ const NavBarContainer = ({ children, ...props }) => {
             justify="space-between"
             wrap="wrap"
             w="100%"
-            mb={8}
             p={8}
             bg="#7C89FF"
             backgroundImage={Noise}
@@ -133,20 +132,22 @@ export default function NavBar(props) {
     }
 
     return (
-        <NavBarContainer {...props}>
-            <Logo width={["100px", "190px"]} height='auto' />
-            <MenuToggle toggle={toggle} isOpen={isOpen} />
-            <MenuLinks isOpen={isOpen} />
-            <MenuLinksBox background="#FFF" width="50%">
-                <MenuItem to="/">Home</MenuItem>
-                <MenuItem to="/mint">Compose and Mint</MenuItem>
-                <MenuItem to="/governance">Governance</MenuItem>
-                <MenuItem to="/explore">Explore</MenuItem>
-            </MenuLinksBox>
-            <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
-            <Clouds src={cloud} top={4} right={4} width={["40%", "30%"]} />
-            <Clouds src={cloud2} top={3} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
-            <Divider />
-        </NavBarContainer>
+        <>
+            <NavBarContainer {...props}>
+                <Logo width={["100px", "190px"]} height='auto' />
+                <MenuToggle toggle={toggle} isOpen={isOpen} />
+                <MenuLinks isOpen={isOpen} />
+                <MenuLinksBox background="#FFF" width="50%">
+                    <MenuItem to="/">Home</MenuItem>
+                    <MenuItem to="/mint">Compose and Mint</MenuItem>
+                    <MenuItem to="/governance">Governance</MenuItem>
+                    <MenuItem to="/explore">Explore</MenuItem>
+                </MenuLinksBox>
+                <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
+                <Clouds src={cloud} top={4} right={4} width={["40%", "30%"]} />
+                <Clouds src={cloud2} top={3} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
+                <Divider />
+            </NavBarContainer>
+        </>
     )
 }

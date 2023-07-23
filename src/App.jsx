@@ -1,11 +1,11 @@
+import Body from './components/Body/Body'
 import NavBar from './components/Header/NavBar'
 
 function App() {
   return (
     <>
       <NavBar />
-      {/* <Header></Header> */}
-      {/* <Body></Body> */}
+      <Body />
     </>
   )
 }
