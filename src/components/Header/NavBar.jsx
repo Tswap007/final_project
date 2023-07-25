@@ -79,7 +79,7 @@ function MenuLinksBox({ children, ...rest }) {
     )
 }
 
-function Clouds({ src, ...props }) {
+export function Clouds({ src, ...props }) {
     return (
         <Box
             position="absolute"
@@ -144,9 +144,9 @@ export default function NavBar(props) {
                     <MenuItem to="/explore">Explore</MenuItem>
                 </MenuLinksBox>
                 <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
-                <Clouds src={cloud} top={4} right={4} width={["40%", "30%"]} />
+                <Clouds src={cloud2} top={4} right={4} width={["40%", "30%"]} />
                 <Clouds src={cloud2} top={3} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
-                <Divider />
+                {/* <Divider /> */}
             </NavBarContainer>
         </>
     )
