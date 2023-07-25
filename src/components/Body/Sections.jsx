@@ -10,7 +10,7 @@ function SectionImage({ sectionImage, sectionOverlayImage, zIndex, left, animati
     const isLeftAnimation = animationDirection === "left";
     const [ref, inView] = useInView({
         triggerOnce: true, // Will trigger the animation only once when it comes into view
-        rootMargin: "0px 0px -5% 0px", // Customize the root margin as per your need
+        rootMargin: "0px 0px -5% 0px",
     });
 
     return (
