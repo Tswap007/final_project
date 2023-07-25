@@ -77,6 +77,7 @@ export default function Body() {
                 cloud2Top={8}
                 cloudLeft="2%"
                 cloud2Left="33%"
+                animationDirection="left"
             />
             <Sections
                 header={sectionThree.header}
@@ -95,7 +96,6 @@ export default function Body() {
                 cloud2Top={8}
                 cloudRight="2%"
                 cloud2Right="33%"
-
             />
         </>
     )

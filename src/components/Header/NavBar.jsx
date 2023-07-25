@@ -1,11 +1,12 @@
-import { Box, IconButton, Image, Link, Text, Flex, Stack, Center, HStack } from "@chakra-ui/react";
+import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack } from "@chakra-ui/react";
 import logo from "../assets/LOGO_full.svg";
 import Noise from '../../bg/noise.svg';
-import cloud from "../assets/cloud1.svg";
 import cloud2 from "../assets/cloud2.svg";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
+// Logo component
 function Logo(props) {
     return (
         <Box {...props}>
@@ -14,6 +15,7 @@ function Logo(props) {
     );
 }
 
+// MenuToggle component
 function MenuToggle({ toggle, isOpen }) {
     return (
         <Box display={{ base: "block", md: "block", lg: "none" }} onClick={toggle} zIndex={1}>
@@ -22,12 +24,16 @@ function MenuToggle({ toggle, isOpen }) {
     );
 }
 
+// MenuItem component
 function MenuItem({ children, to = "/", ...rest }) {
     return (
-        <Link display="block" href={to} > <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']}  {...rest} >{children}</Text> </Link>
-    )
+        <Link display="block" href={to}>
+            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} {...rest}>{children}</Text>
+        </Link>
+    );
 }
 
+// MenuLinks component
 function MenuLinks({ isOpen }) {
     return (
         <Box
@@ -51,6 +57,7 @@ function MenuLinks({ isOpen }) {
     );
 }
 
+// MenuLinksBox component
 function MenuLinksBox({ children, ...rest }) {
     return (
         <Box
@@ -76,34 +83,10 @@ function MenuLinksBox({ children, ...rest }) {
                 {children}
             </HStack>
         </Box>
-    )
-}
-
-export function Clouds({ src, ...props }) {
-    return (
-        <Box
-            position="absolute"
-            zIndex={0}
-            {...props}>
-            <Image src={src} width="100%" height="auto" />
-        </Box>
-    )
-}
-
-function Divider() { //might remove this but lets see for now
-    return (
-        <Box
-            height="0px"
-            width="100%"
-            position="absolute"
-            bottom={1}
-            left={0}
-            borderBottom="1px solid #E1D8B0"
-        />
     );
 }
 
-
+// NavBarContainer component
 const NavBarContainer = ({ children, ...props }) => {
     return (
         <Flex
@@ -120,10 +103,29 @@ const NavBarContainer = ({ children, ...props }) => {
         >
             {children}
         </Flex>
-    )
+    );
 }
 
+// Animated Clouds component
+export function Clouds({ src, ...props }) {
+    return (
+        <Box position="absolute" zIndex={0} {...props}>
+            <motion.div
+                animate={{ y: ["0%", "1%", "0%"], x: ["0%", "1%", "0%"] }}
+                transition={{
+                    repeat: Infinity, // Repeat the animation indefinitely
+                    repeatType: "loop", // Loop the animation smoothly
+                    duration: 8,
+                    ease: "linear", // Use linear easing for a smoother loop
+                }}
+            >
+                <Image src={src} width="100%" height="auto" />
+            </motion.div>
+        </Box>
+    );
+}
 
+// NavBar component
 export default function NavBar(props) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -143,11 +145,12 @@ export default function NavBar(props) {
                     <MenuItem to="/governance">Governance</MenuItem>
                     <MenuItem to="/explore">Explore</MenuItem>
                 </MenuLinksBox>
-                <MenuLinksBox width="15%" background="#5FC95D"><MenuItem>Connect Wallet</MenuItem></MenuLinksBox>
+                <MenuLinksBox width="15%" background="#5FC95D">
+                    <MenuItem>Connect Wallet</MenuItem>
+                </MenuLinksBox>
                 <Clouds src={cloud2} top={4} right={4} width={["40%", "30%"]} />
                 <Clouds src={cloud2} top={3} right={["30%", "calc(35% + 40px)"]} width="28%" display={{ base: 'none', md: 'block', lg: "block" }} />
-                {/* <Divider /> */}
             </NavBarContainer>
         </>
-    )
+    );
 }
