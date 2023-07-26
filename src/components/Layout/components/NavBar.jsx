@@ -1,7 +1,7 @@
 import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack } from "@chakra-ui/react";
-import logo from "../assets/LOGO_full.svg";
-import Noise from '../../bg/noise.svg';
-import cloud2 from "../assets/cloud2.svg";
+import logo from "../../assets/LOGO_full.svg";
+import Noise from '../../../bg/noise.svg';
+import cloud2 from "../../assets/cloud2.svg";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -27,8 +27,8 @@ function MenuToggle({ toggle, isOpen }) {
 // MenuItem component
 function MenuItem({ children, to = "/", ...rest }) {
     return (
-        <Link display="block" href={to}>
-            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} {...rest}>{children}</Text>
+        <Link display="block" href={to} {...rest}>
+            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']}>{children}</Text>
         </Link>
     );
 }
@@ -51,7 +51,7 @@ function MenuLinks({ isOpen }) {
                 <MenuItem to="/">Home</MenuItem>
                 <MenuItem to="/mint">Compose And Mint</MenuItem>
                 <MenuItem to="/governance">Governance</MenuItem>
-                <MenuItem to="/explore">Explore</MenuItem>
+                <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
             </Stack>
         </Box>
     );
@@ -143,7 +143,7 @@ export default function NavBar(props) {
                     <MenuItem to="/">Home</MenuItem>
                     <MenuItem to="/mint">Compose and Mint</MenuItem>
                     <MenuItem to="/governance">Governance</MenuItem>
-                    <MenuItem to="/explore">Explore</MenuItem>
+                    <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
                 </MenuLinksBox>
                 <MenuLinksBox width="15%" background="#5FC95D">
                     <MenuItem>Connect Wallet</MenuItem>

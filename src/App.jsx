@@ -1,13 +1,18 @@
-import Body from './components/Body/Body'
-import Footer from './components/Footer/Footer'
-import NavBar from './components/Header/NavBar'
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout/Layout'
+import Home from './components/Home/Home'
+import MintPage from './components/MintPage/MintPage'
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Body />
-      <Footer />
+      <Layout>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/mint" element={<MintPage />} />
+          {/* <Route element={NotFound} /> */}
+        </Routes>
+      </Layout>
     </>
   )
 }
