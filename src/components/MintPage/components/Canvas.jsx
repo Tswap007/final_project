@@ -12,14 +12,6 @@ const Canvas = () => {
             <div style={{ background: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'30\' height=\'30\' fill-opacity=\'.25\'%3E%3Crect x=\'15\' width=\'15\' height=\'15\' fill=\'%23888888\' /%3E%3Crect y=\'15\' width=\'15\' height=\'15\' fill=\'%23888888\' /%3E%3C/svg%3E")', backgroundSize: '40px 40px' }}>
                 <Stage width={500} height={400}>
                     <Layer>
-                        <Rect
-                            width={50}
-                            height={50}
-                            fill="red"
-                            x={50}
-                            y={50}
-                            draggable // Make the shape draggable if needed for customization 
-                        />
                     </Layer>
                 </Stage>
             </div>
