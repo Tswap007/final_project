@@ -1,6 +1,6 @@
 import { Box, ButtonGroup, IconButton, Flex, Image, Text, VStack, Heading, HStack, Link, UnorderedList, ListItem } from "@chakra-ui/react"
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
-import SmallLogo from "../assets/small_LOGO.png"
+import SmallLogo from "../../assets/small_LOGO.png"
 
 function LeftSide() {
     return (

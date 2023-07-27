@@ -1,4 +1,4 @@
-import Sections from "./Sections";
+import Sections from "./components/Sections";
 
 import S1Image from "../assets/s1bg.svg"
 import S1Overlay from "../assets/s1overlay.svg"
@@ -10,7 +10,7 @@ import S3Overlay from "../assets/s3overlay.svg"
 import S2cloud from "../assets/s2Cloud.svg"
 import S3cloud from "../assets/s3Cloud.svg"
 
-export default function Body() {
+export default function Home() {
 
     const sectionOne = {
         sectionImage: S1Image,
@@ -18,9 +18,10 @@ export default function Body() {
         header: 'CUSTOMIZE',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'COMPOSE AND MINT',
-        to: "/",
+        to: "/mint",
         bg: "#7C89FF",
-        left: "43%"
+        left: "43%",
+        isExternal: false
     };
 
     const sectionTwo = {
@@ -29,9 +30,10 @@ export default function Body() {
         header: 'Govern',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'Vote Or Propose',
-        to: "/",
-        bg: "#F3EAC6",
-        left: "39%"
+        to: "/governance",
+        bg: "#7C89FF", // previous F3EAC6
+        left: "39%",
+        isExternal: false
     };
 
     const sectionThree = {
@@ -40,9 +42,10 @@ export default function Body() {
         header: 'HAVE FUN',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'EXPLORE COLLECTION',
-        to: "/",
-        bg: "#70EC6E",
-        left: "39%"
+        to: "https://opensea.io",
+        bg: "#7C89FF", // previous 70EC6E
+        left: "39%",
+        isExternal: true
     };
 
     return (
@@ -57,8 +60,14 @@ export default function Body() {
                 zIndex={3}
                 direction={{ base: "column-reverse", md: "column-reverse", lg: "row" }}
                 bg={sectionOne.bg}
-                pt={{ base: 10, md: 0 }}
+                pt={{ base: 10, md: 20 }}
                 left={sectionOne.left}
+                isExternal={sectionOne.isExternal}
+                cloudSrc={S2cloud}
+                cloudTop={4}
+                cloud2Top={8}
+                cloudRight="2%"
+                cloud2Right="33%"
             />
             <Sections
                 header={sectionTwo.header}
@@ -78,6 +87,7 @@ export default function Body() {
                 cloudLeft="2%"
                 cloud2Left="33%"
                 animationDirection="left"
+                isExternal={sectionTwo.isExternal}
             />
             <Sections
                 header={sectionThree.header}
@@ -91,11 +101,12 @@ export default function Body() {
                 bg={sectionThree.bg}
                 pt={75}
                 left={sectionThree.left}
-                cloudSrc={S3cloud}
+                cloudSrc={S2cloud}
                 cloudTop={4}
                 cloud2Top={8}
                 cloudRight="2%"
                 cloud2Right="33%"
+                isExternal={sectionThree.isExternal}
             />
         </>
     )

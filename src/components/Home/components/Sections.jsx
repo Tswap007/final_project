@@ -1,16 +1,17 @@
 import { Flex, Box, Image, Stack, Heading, Text, Link } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import Noise from "../../bg/noise.svg";
-import HeaderTop from "../assets/texttop.svg";
-import { Clouds } from "../Header/NavBar";
+import Noise from "../../../bg/noise.svg";
+import HeaderTop from "../../assets/texttop.svg";
+import { Clouds } from "../../Layout/components/NavBar";
 import { useInView } from "react-intersection-observer";
+import { useState } from "react";
 
 // SectionImage component with animation
 function SectionImage({ sectionImage, sectionOverlayImage, zIndex, left, animationDirection }) {
     const isLeftAnimation = animationDirection === "left";
     const [ref, inView] = useInView({
         triggerOnce: true, // Will trigger the animation only once when it comes into view
-        rootMargin: "0px 0px -5% 0px",
+        rootMargin: "-5% 0px -5% 0px",
     });
 
     return (
@@ -37,7 +38,10 @@ function SectionImage({ sectionImage, sectionOverlayImage, zIndex, left, animati
 
 
 // SectionDetails component
-function SectionDetails({ header, description, buttonText, to }) {
+function SectionDetails({ header, description, buttonText, to = "/", isExternal }) {
+
+    const linkTarget = isExternal ? "_blank" : "_self";
+
     return (
         <Stack
             spacing={4}
@@ -65,10 +69,11 @@ function SectionDetails({ header, description, buttonText, to }) {
                 lineHeight={1.5}
                 textAlign={["center", "center", "left", "left"]}
                 pl={{ lg: 10 }}
+                pr={{ lg: 10 }}
             >
                 {description}
             </Text>
-            <Link to={to}>
+            <Link href={to} target={linkTarget} rel={isExternal ? "noopener noreferrer" : undefined}>
                 <Box
                     alignItems="center"
                     bg={"white"}
@@ -120,6 +125,7 @@ export default function Sections({
     description,
     buttonText,
     to,
+    isExternal,
     sectionImage,
     sectionOverlayImage,
     bg,
@@ -141,11 +147,11 @@ export default function Sections({
         <Flex
             position="relative"
             align="center"
-            justify={{ base: "center", md: "space-around", xl: "space-between" }}
+            justify={{ base: "center", md: "space-around", xl: "space-around" }}
             wrap="no-wrap"
             minH="70vh"
             px={[3, 3, 6, 8]}
-            paddingBottom={{ base: 5, md: 5, lg: 0 }}
+            paddingBottom={{ base: 5, md: 5, lg: 8 }}
             bg={bg}
             backgroundImage={Noise}
             direction={direction}
@@ -171,7 +177,7 @@ export default function Sections({
                     display={{ base: "none", md: "block" }}
                 />
             )}
-            <SectionDetails header={header} description={description} buttonText={buttonText} to={to} />
+            <SectionDetails header={header} description={description} buttonText={buttonText} to={to} isExternal={isExternal} />
             <SectionImage sectionImage={sectionImage} sectionOverlayImage={sectionOverlayImage} zIndex={zIndex} left={left} animationDirection={animationDirection} />
         </Flex>
     );
