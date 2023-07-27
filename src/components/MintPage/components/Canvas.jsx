@@ -18,7 +18,7 @@ const Canvas = () => {
                             fill="red"
                             x={50}
                             y={50}
-                            draggable // Make the shape draggable if needed for customization
+                            draggable // Make the shape draggable if needed for customization 
                         />
                     </Layer>
                 </Stage>
