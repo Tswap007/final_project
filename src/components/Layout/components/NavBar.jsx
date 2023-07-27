@@ -34,6 +34,7 @@ function MenuItem({ children, to = "/", ...rest }) {
 }
 
 // MenuLinks component
+
 function MenuLinks({ isOpen }) {
     return (
         <Box
@@ -96,7 +97,7 @@ const NavBarContainer = ({ children, ...props }) => {
             justify="space-between"
             wrap="wrap"
             w="100%"
-            maxHeight={["80px", "80px"]}
+            maxHeight={["auto", "80px"]}
             p={3}
             bg="#7C89FF"
             backgroundImage={Noise}
