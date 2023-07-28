@@ -139,7 +139,7 @@ export default function NavBar(props) {
     return (
         <>
             <NavBarContainer {...props}>
-                <Logo width={["100px", "190px"]} height='auto' />
+                <Logo width={["100px", "120px"]} height='auto' />
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
                 <MenuLinksBox background="#FFF" width="50%">
