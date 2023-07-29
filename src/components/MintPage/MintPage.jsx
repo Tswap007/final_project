@@ -7,7 +7,6 @@ export default function MintPage() {
         <Flex
             bg="#7C89FF"
             backgroundImage={Noise}
-            justifyContent="center"
         >
             <Canvas />
         </Flex>
