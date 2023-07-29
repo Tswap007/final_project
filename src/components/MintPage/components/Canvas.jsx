@@ -1,11 +1,11 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
-import bg1 from "../attributes/background/bg_01.png"
-import head1 from "../attributes/head/head_01.png"
-import face1 from "../attributes/face/face_01.png"
-import body1 from "../attributes/body/body_01.png"
-import pet1 from "../attributes/pet/pet_01.png"
+import bg1 from "../attributes/background/background_02.svg"
+import head1 from "../attributes/head/head_01.svg"
+import face1 from "../attributes/face/face_01.svg"
+import body1 from "../attributes/body/body_01.svg"
+import pet1 from "../attributes/pet/pet_01.svg"
 
 const Canvas = () => {
     const [backgroundImage, setBackgroundImage] = useState(null);
@@ -13,6 +13,9 @@ const Canvas = () => {
     const [faceImage, setFaceImage] = useState(null);
     const [bodyImage, setBodyImage] = useState(null);
     const [petImage, setPetImage] = useState(null);
+
+    const stageHeight = useBreakpointValue({ base: 350, md: 380, lg: 450 });
+    const stageWidth = useBreakpointValue({ base: 350, md: 380, lg: 450 });
 
     useEffect(() => {
         // Simulating backgroundImage loading with a delay
@@ -62,35 +65,35 @@ const Canvas = () => {
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23888888' /%3E%3Crect y='15' width='15' height='15' fill='%23888888' /%3E%3C/svg%3E")`;
 
     return (
-        <Flex bg={'blackAlpha.900'} width="40%" height="40%">
+        <Flex bg={'blackAlpha.800'} width={stageWidth} height={stageHeight}>
             <Box
                 width="100%"
                 height="100%"
                 background={checkerboardPattern}
-                backgroundSize="40px 40px"
+                backgroundSize="35px 35px"
                 display="flex" // Make the Box a flex container
                 alignItems="center" // Align the children vertically in the center
                 justifyContent="center" // Align the children horizontally in the center
-                minH="350px" // Set a minimum height for the Box
-                minW="350px" // Set a minimum width for the Box
+                minH={stageHeight} // Set a minimum height for the Box
+                minW={stageWidth}// Set a minimum width for the Box
             >
-                {/* <Stage width={350} height={350}>
+                <Stage width={stageWidth} height={stageHeight}>
                     <Layer>
-                        <Image image={backgroundImage} width={350} height={350} />
+                        <Image image={backgroundImage} width={stageWidth} height={stageHeight} />
                     </Layer>
                     <Layer>
-                        <Image image={headImage} width={350} height={350} />
+                        <Image image={headImage} width={stageWidth} height={stageHeight} />
                     </Layer>
                     <Layer>
-                        <Image image={faceImage} width={350} height={350} />
+                        <Image image={faceImage} width={stageWidth} height={stageHeight} />
                     </Layer>
                     <Layer>
-                        <Image image={bodyImage} width={350} height={350} />
+                        <Image image={bodyImage} width={stageWidth} height={stageHeight} />
                     </Layer>
                     <Layer>
-                        <Image image={petImage} width={350} height={350} />
+                        <Image image={petImage} width={stageWidth} height={stageHeight} />
                     </Layer>
-                </Stage> */}
+                </Stage>
             </Box>
         </Flex>
     )
