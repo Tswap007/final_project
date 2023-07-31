@@ -11,8 +11,7 @@ function Buttons({ topBorder, bottomBorder, children, ...rest }) {
             textColor="white"
             // bg="#313240"
             variant="ghost"
-            borderBottomWidth={bottomBorder ? "0.5px" : "0px"}
-            borderTopWidth={topBorder ? "0.5px" : "0px"}
+            borderBottomWidth="0.5px"
             borderLeftWidth={{ base: "0.1px", md: "0" }}
             borderRightWidth={{ base: "0.1px", md: "0" }}
             borderColor="gray.400"
@@ -37,11 +36,11 @@ function SideBarContents() {
             direction={['row', 'row', 'column', 'column']}
 
         >
-            <Buttons topBorder bottomBorder>BackGround</Buttons>
-            <Buttons bottomBorder>Head</Buttons>
-            <Buttons bottomBorder>Expression</Buttons>
-            <Buttons bottomBorder>Body</Buttons>
-            <Buttons bottomBorder>Pet</Buttons>
+            <Buttons>BackGround</Buttons>
+            <Buttons>Head</Buttons>
+            <Buttons>Expression</Buttons>
+            <Buttons>Body</Buttons>
+            <Buttons>Pet</Buttons>
         </Stack>
     )
 }
@@ -50,9 +49,15 @@ function SideBarContents() {
 export default function SideBar() {
     return (
         <Box
+            as="nav"
             position="relative"
             w={{ base: "100%", md: "15%", lg: "12%" }}
             bg={'blackAlpha.800'}
+            opacity="90%"
+            borderWidth="0.5px"
+            borderBottom={0}
+            borderTop={0}
+            borderLeft={0}
         >
             <SideBarContents />
         </Box>
