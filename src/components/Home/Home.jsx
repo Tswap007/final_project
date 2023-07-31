@@ -8,7 +8,6 @@ import S3Image from "../assets/s3bg.svg"
 import S3Overlay from "../assets/s3overlay.svg"
 
 import S2cloud from "../assets/s2Cloud.svg"
-import S3cloud from "../assets/s3Cloud.svg"
 
 export default function Home() {
 

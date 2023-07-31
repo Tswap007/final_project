@@ -77,7 +77,7 @@ const Canvas = () => {
                 minH={stageHeight} // Set a minimum height for the Box
                 minW={stageWidth}// Set a minimum width for the Box
             >
-                <Stage width={stageWidth} height={stageHeight}>
+                {/* <Stage width={stageWidth} height={stageHeight}>
                     <Layer>
                         <Image image={backgroundImage} width={stageWidth} height={stageHeight} />
                     </Layer>
@@ -93,7 +93,7 @@ const Canvas = () => {
                     <Layer>
                         <Image image={petImage} width={stageWidth} height={stageHeight} />
                     </Layer>
-                </Stage>
+                </Stage> */}
             </Box>
         </Flex>
     )
