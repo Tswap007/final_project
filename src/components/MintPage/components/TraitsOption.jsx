@@ -1,22 +1,14 @@
 import { Box, Text, Image, Flex, Button } from "@chakra-ui/react";
+import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
 
-//instead of importing like this I need to create a function that takes in the name of the particular folder and import 
-//the images there got to have to be a reusable function for all the traits folders
-import bg1 from "../attributes/background/background_01.svg"
-import bg2 from "../attributes/background/background_02.svg"
-import bg3 from "../attributes/background/background_03.svg"
-import bg4 from "../attributes/background/background_04.svg"
-import bg5 from "../attributes/background/background_05.svg"
-import bg6 from "../attributes/background/background_06.svg"
 
-const backgrounds = [
-    { path: bg1, label: "Background 1" },
-    { path: bg2, label: "Background 2" },
-    { path: bg3, label: "Background 3" },
-    { path: bg4, label: "Background 4" },
-    { path: bg5, label: "Background 5" },
-    { path: bg6, label: "Background 6" }
-];
+const backgrounds = getBackgrounds();
+const bodies = getBodies();
+const faces = getFaces();
+const heads = getHeads();
+const pets = getPets();
+
+const activeTrait = backgrounds;
 
 export function TopBar({ children, textColor, ...rest }) {
     return (
@@ -65,15 +57,15 @@ function ButtonsWithImages({ path, label }) {
     )
 }
 
-const ButtonList = () => (
+const ButtonList = ({ activeTrait }) => (
     <Flex flexWrap="wrap" padding={2}>
-        {backgrounds.map((button, index) => (
+        {activeTrait.map((button, index) => (
             <ButtonsWithImages key={index} path={button.path} label={button.label} />
         ))}
     </Flex>
 );
 
-export default function TraitsOption() {
+export default function TraitsOption({ activeTrait }) {
     return (
         <Box
             as="aside"
@@ -82,7 +74,7 @@ export default function TraitsOption() {
             bg={"white"}
         >
             <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>Select Traits</TopBar>
-            <ButtonList />
+            <ButtonList activeTrait={activeTrait} />
         </Box>
     )
 }

@@ -1,15 +1,19 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
 import { useState } from "react";
+import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
 
+const backgrounds = getBackgrounds();
+const bodies = getBodies();
+const faces = getFaces();
+const heads = getHeads();
+const pets = getPets();
 
-function Buttons({ topBorder, bottomBorder, children, ...rest }) {
-
+export function Buttons({ children, onClick, ...rest }) {
     return (
         <Button
             bg="black.800"
             w="100%"
             textColor="white"
-            // bg="#313240"
             variant="ghost"
             borderBottomWidth="0.5px"
             borderLeftWidth={{ base: "0.1px", md: "0" }}
@@ -20,33 +24,32 @@ function Buttons({ topBorder, bottomBorder, children, ...rest }) {
             fontSize={['16px', '20px', '20px']}
             fontWeight={{ base: 200, md: 300 }}
             _hover={{ bg: "#313240" }}
+            onClick={onClick}
             {...rest}
         >
             {children}
         </Button>
-    )
+    );
 }
 
-function SideBarContents() {
+function SideBarContents({ changeActiveTrait }) {
     return (
-        <Stack
-            spacing={0}
-            align="center"
-            p={0}
-            direction={['row', 'row', 'column', 'column']}
-
-        >
-            <Buttons>BackGround</Buttons>
-            <Buttons>Head</Buttons>
-            <Buttons>Expression</Buttons>
-            <Buttons>Body</Buttons>
-            <Buttons>Pet</Buttons>
+        <Stack spacing={0} align="center" p={0} direction={['row', 'row', 'column', 'column']}>
+            <Buttons onClick={() => changeActiveTrait(backgrounds)}>BackGround</Buttons>
+            <Buttons onClick={() => changeActiveTrait(heads)}>Head</Buttons>
+            <Buttons onClick={() => changeActiveTrait(faces)}>Expression</Buttons>
+            <Buttons onClick={() => changeActiveTrait(bodies)}>Body</Buttons>
+            <Buttons onClick={() => changeActiveTrait(pets)}>Pet</Buttons>
         </Stack>
-    )
+    );
 }
 
+export default function SideBar({ setActiveTrait }) {
+    const changeActiveTraitInSideBar = (traitArray) => {
+        setActiveTrait(traitArray);
+        console.log(`Active Trait = ${traitArray}`)
+    };
 
-export default function SideBar() {
     return (
         <Box
             as="nav"
@@ -59,8 +62,7 @@ export default function SideBar() {
             borderTop={0}
             borderLeft={0}
         >
-            <SideBarContents />
+            <SideBarContents changeActiveTrait={changeActiveTraitInSideBar} />
         </Box>
-
-    )
+    );
 }

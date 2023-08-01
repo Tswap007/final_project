@@ -4,8 +4,13 @@ import Noise from '../../bg/noise.svg';
 import SideBar from "./components/SideBar";
 import TraitsOption from "./components/TraitsOption";
 import Selected from "./components/Selected";
+import { useState } from "react";
+import { getBackgrounds } from "./components/ImportImages";
 
 export default function MintPage() {
+    const backgrounds = getBackgrounds();
+    const [activeTrait, setActiveTrait] = useState(backgrounds);
+
     return (
         <Flex
             bg="#7C89FF"
@@ -15,8 +20,8 @@ export default function MintPage() {
             h="100%"
 
         >
-            <SideBar />
-            <TraitsOption />
+            <SideBar activeTrait={activeTrait} setActiveTrait={setActiveTrait} />
+            <TraitsOption activeTrait={activeTrait} />
             <Canvas />
             <Selected />
         </Flex>
