@@ -1,4 +1,7 @@
 import { Box, Text, Image, Flex, Button } from "@chakra-ui/react";
+
+//instead of importing like this I need to create a function that takes in the name of the particular folder and import 
+//the images there got to have to be a reusable function for all the traits folders
 import bg1 from "../attributes/background/background_01.svg"
 import bg2 from "../attributes/background/background_02.svg"
 import bg3 from "../attributes/background/background_03.svg"
@@ -40,28 +43,32 @@ export function TopBar({ children, textColor, ...rest }) {
 
 function ButtonsWithImages({ path, label }) {
     return (
-        <Button
-            p={0}
-            m={2}
-            borderRadius="full"
-            bg="gray.200"
-            w="75px"
-            h="75px"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-        >
-            <Image src={path} alt={label} width="60px" height="60px" />
-            <Box mt={2}>{label}</Box>
-        </Button>
+        <>
+            <Box align="center" padding={1}>
+                <Button
+                    p={0}
+                    m={2}
+                    borderRadius="10px"
+                    bg="gray.200"
+                    w={{ base: "60px", md: "90px" }}
+                    h={{ base: "60px", md: "90px" }}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    <Image src={path} alt={label} width="100%" height="100%" borderRadius="10px" />
+                </Button>
+                <Box mt={1}><Text fontWeight={700}>{label}</Text></Box>
+            </Box>
+        </>
     )
 }
 
 const ButtonList = () => (
-    <Flex flexWrap="wrap">
+    <Flex flexWrap="wrap" padding={2}>
         {backgrounds.map((button, index) => (
-            <ButtonsWithImages key={index} icon={button.path} label={button.label} />
+            <ButtonsWithImages key={index} path={button.path} label={button.label} />
         ))}
     </Flex>
 );
