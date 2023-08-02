@@ -8,7 +8,7 @@ const faces = getFaces();
 const heads = getHeads();
 const pets = getPets();
 
-const activeTrait = backgrounds;
+
 
 export function TopBar({ children, textColor, ...rest }) {
     return (
@@ -33,7 +33,7 @@ export function TopBar({ children, textColor, ...rest }) {
 
 }
 
-function ButtonsWithImages({ path, label }) {
+function ButtonsWithImages({ path, label, onClick }) {
     return (
         <>
             <Box align="center" padding={1}>
@@ -48,6 +48,7 @@ function ButtonsWithImages({ path, label }) {
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
+                    onClick={onClick}
                 >
                     <Image src={path} alt={label} width="100%" height="100%" borderRadius="10px" />
                 </Button>
@@ -57,15 +58,40 @@ function ButtonsWithImages({ path, label }) {
     )
 }
 
-const ButtonList = ({ activeTrait }) => (
+
+const ButtonList = ({ activeTrait, setLayerImage }) => (
     <Flex flexWrap="wrap" padding={2}>
         {activeTrait.map((button, index) => (
-            <ButtonsWithImages key={index} path={button.path} label={button.label} />
+            <ButtonsWithImages key={index} path={button.path} label={button.label} onClick={() => setLayerImage(button)} />
         ))}
     </Flex>
 );
 
-export default function TraitsOption({ activeTrait }) {
+export default function TraitsOption({
+    activeTrait,
+    activeTraitName,
+    setActiveBackground,
+    setActiveBody,
+    setActiveFace,
+    setActiveHead,
+    setActivePet,
+}) {
+    function setLayerImageOncanvas(buttonDetails) {
+        if (activeTraitName === 'backgrounds') {
+            setActiveBackground(buttonDetails.path);
+        } else if (activeTraitName === 'bodies') {
+            setActiveBody(buttonDetails.path);
+        } else if (activeTraitName === 'faces') {
+            setActiveFace(buttonDetails.path);
+        } else if (activeTraitName === 'heads') {
+            setActiveHead(buttonDetails.path);
+        } else if (activeTraitName === 'pets') {
+            setActivePet(buttonDetails.path);
+        }
+
+        console.log(buttonDetails.path);
+    }
+    console.log(activeTraitName);
     return (
         <Box
             as="aside"
@@ -74,7 +100,7 @@ export default function TraitsOption({ activeTrait }) {
             bg={"white"}
         >
             <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>Select Traits</TopBar>
-            <ButtonList activeTrait={activeTrait} />
+            <ButtonList activeTrait={activeTrait} setLayerImage={setLayerImageOncanvas} />
         </Box>
     )
 }

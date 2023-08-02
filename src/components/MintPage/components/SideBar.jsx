@@ -35,19 +35,20 @@ export function Buttons({ children, onClick, ...rest }) {
 function SideBarContents({ changeActiveTrait }) {
     return (
         <Stack spacing={0} align="center" p={0} direction={['row', 'row', 'column', 'column']}>
-            <Buttons onClick={() => changeActiveTrait(backgrounds)}>BackGround</Buttons>
-            <Buttons onClick={() => changeActiveTrait(heads)}>Head</Buttons>
-            <Buttons onClick={() => changeActiveTrait(faces)}>Expression</Buttons>
-            <Buttons onClick={() => changeActiveTrait(bodies)}>Body</Buttons>
-            <Buttons onClick={() => changeActiveTrait(pets)}>Pet</Buttons>
+            <Buttons onClick={() => changeActiveTrait(backgrounds, "backgrounds")}>BackGround</Buttons>
+            <Buttons onClick={() => changeActiveTrait(heads, "heads")}>Head</Buttons>
+            <Buttons onClick={() => changeActiveTrait(faces, "faces")}>Expression</Buttons>
+            <Buttons onClick={() => changeActiveTrait(bodies, "bodies")}>Body</Buttons>
+            <Buttons onClick={() => changeActiveTrait(pets, "pets")}>Pet</Buttons>
         </Stack>
     );
 }
 
-export default function SideBar({ setActiveTrait }) {
-    const changeActiveTraitInSideBar = (traitArray) => {
+export default function SideBar({ setActiveTrait, setActiveTraitName }) {
+    const changeActiveTraitInSideBar = (traitArray, traitName) => {
         setActiveTrait(traitArray);
-        console.log(`Active Trait = ${traitArray}`)
+        setActiveTraitName(traitName);
+
     };
 
     return (

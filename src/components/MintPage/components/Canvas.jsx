@@ -7,7 +7,7 @@ import face1 from "../attributes/face/face_01.svg"
 import body1 from "../attributes/body/body_01.svg"
 import pet1 from "../attributes/pet/pet_01.svg"
 
-const Canvas = () => {
+const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePet }) => {
     const [backgroundImage, setBackgroundImage] = useState(null);
     const [headImage, setHeadImage] = useState(null);
     const [faceImage, setFaceImage] = useState(null);
@@ -19,48 +19,48 @@ const Canvas = () => {
 
     useEffect(() => {
         // Simulating backgroundImage loading with a delay
-        const bgImg = new window.Image();
-        bgImg.src = bg1;
+        const bgImg = new window.Image(activeBackground);
+        bgImg.src = activeBackground;
         bgImg.onload = () => {
             setBackgroundImage(bgImg);
         };
-    }, [backgroundImage]);
+    }, [activeBackground]);
 
     useEffect(() => {
         // Simulating headImage loading with a delay
         const headImg = new window.Image();
-        headImg.src = head1;
+        headImg.src = activeHead;
         headImg.onload = () => {
             setHeadImage(headImg);
         };
-    }, [headImage]);
+    }, [activeHead]);
 
     useEffect(() => {
         // Simulating faceImage loading with a delay
         const faceImg = new window.Image();
-        faceImg.src = face1;
+        faceImg.src = activeFace;
         faceImg.onload = () => {
             setFaceImage(faceImg);
         };
-    }, [faceImage]);
+    }, [activeFace]);
 
     useEffect(() => {
         // Simulating bodyImage loading with a delay
         const bodyImg = new window.Image();
-        bodyImg.src = body1;
+        bodyImg.src = activeBody;
         bodyImg.onload = () => {
             setBodyImage(bodyImg);
         };
-    }, [bodyImage]);
+    }, [activeBody]);
 
     useEffect(() => {
         // Simulating petImage loading with a delay
         const petImg = new window.Image();
-        petImg.src = pet1;
+        petImg.src = activePet;
         petImg.onload = () => {
             setPetImage(petImg);
         };
-    }, [petImage]);
+    }, [activePet]);
 
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;
 

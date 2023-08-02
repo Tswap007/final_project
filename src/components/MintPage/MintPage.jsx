@@ -10,6 +10,12 @@ import { getBackgrounds } from "./components/ImportImages";
 export default function MintPage() {
     const backgrounds = getBackgrounds();
     const [activeTrait, setActiveTrait] = useState(backgrounds);
+    const [activeTraitName, setActiveTraitName] = useState("")
+    const [activeBackground, setActiveBackground] = useState(null)
+    const [activeBody, setActiveBody] = useState(null)
+    const [activeFace, setActiveFace] = useState(null)
+    const [activeHead, setActiveHead] = useState(null)
+    const [activePet, setActivePet] = useState(null)
 
     return (
         <Flex
@@ -20,9 +26,25 @@ export default function MintPage() {
             h="100%"
 
         >
-            <SideBar activeTrait={activeTrait} setActiveTrait={setActiveTrait} />
-            <TraitsOption activeTrait={activeTrait} />
-            <Canvas />
+            <SideBar
+                activeTrait={activeTrait} setActiveTrait={setActiveTrait}
+                activeTraitName={activeTraitName} setActiveTraitName={setActiveTraitName} />
+            <TraitsOption
+                activeTrait={activeTrait}
+                activeTraitName={activeTraitName}
+                setActiveBackground={setActiveBackground}
+                setActiveBody={setActiveBody}
+                setActiveFace={setActiveFace}
+                setActiveHead={setActiveHead}
+                setActivePet={setActivePet}
+            />
+            <Canvas
+                activeBackground={activeBackground}
+                activeBody={activeBody}
+                activeFace={activeFace}
+                activeHead={activeHead}
+                activePet={activePet}
+            />
             <Selected />
         </Flex>
     );
