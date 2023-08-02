@@ -1,5 +1,4 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
-import { useState } from "react";
 import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
 
 const backgrounds = getBackgrounds();
@@ -36,9 +35,9 @@ function SideBarContents({ changeActiveTrait }) {
     return (
         <Stack spacing={0} align="center" p={0} direction={['row', 'row', 'column', 'column']}>
             <Buttons onClick={() => changeActiveTrait(backgrounds, "backgrounds")}>BackGround</Buttons>
-            <Buttons onClick={() => changeActiveTrait(heads, "heads")}>Head</Buttons>
-            <Buttons onClick={() => changeActiveTrait(faces, "faces")}>Expression</Buttons>
             <Buttons onClick={() => changeActiveTrait(bodies, "bodies")}>Body</Buttons>
+            <Buttons onClick={() => changeActiveTrait(heads, "heads")}>Head</Buttons>
+            <Buttons onClick={() => changeActiveTrait(faces, "expressions")}>Expression</Buttons>
             <Buttons onClick={() => changeActiveTrait(pets, "pets")}>Pet</Buttons>
         </Stack>
     );

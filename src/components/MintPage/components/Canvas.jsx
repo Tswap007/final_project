@@ -20,7 +20,7 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
     useEffect(() => {
         // Simulating backgroundImage loading with a delay
         const bgImg = new window.Image(activeBackground);
-        bgImg.src = activeBackground;
+        bgImg.src = activeBackground.path;
         bgImg.onload = () => {
             setBackgroundImage(bgImg);
         };
@@ -29,7 +29,7 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
     useEffect(() => {
         // Simulating headImage loading with a delay
         const headImg = new window.Image();
-        headImg.src = activeHead;
+        headImg.src = activeHead.path;
         headImg.onload = () => {
             setHeadImage(headImg);
         };
@@ -38,7 +38,7 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
     useEffect(() => {
         // Simulating faceImage loading with a delay
         const faceImg = new window.Image();
-        faceImg.src = activeFace;
+        faceImg.src = activeFace.path;
         faceImg.onload = () => {
             setFaceImage(faceImg);
         };
@@ -47,7 +47,7 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
     useEffect(() => {
         // Simulating bodyImage loading with a delay
         const bodyImg = new window.Image();
-        bodyImg.src = activeBody;
+        bodyImg.src = activeBody.path;
         bodyImg.onload = () => {
             setBodyImage(bodyImg);
         };
@@ -56,7 +56,7 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
     useEffect(() => {
         // Simulating petImage loading with a delay
         const petImg = new window.Image();
-        petImg.src = activePet;
+        petImg.src = activePet.path;
         petImg.onload = () => {
             setPetImage(petImg);
         };

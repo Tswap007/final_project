@@ -1,13 +1,4 @@
 import { Box, Text, Image, Flex, Button } from "@chakra-ui/react";
-import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
-
-
-const backgrounds = getBackgrounds();
-const bodies = getBodies();
-const faces = getFaces();
-const heads = getHeads();
-const pets = getPets();
-
 
 
 export function TopBar({ children, textColor, ...rest }) {
@@ -78,15 +69,15 @@ export default function TraitsOption({
 }) {
     function setLayerImageOncanvas(buttonDetails) {
         if (activeTraitName === 'backgrounds') {
-            setActiveBackground(buttonDetails.path);
+            setActiveBackground(buttonDetails);
         } else if (activeTraitName === 'bodies') {
-            setActiveBody(buttonDetails.path);
-        } else if (activeTraitName === 'faces') {
-            setActiveFace(buttonDetails.path);
+            setActiveBody(buttonDetails);
+        } else if (activeTraitName === 'expressions') {
+            setActiveFace(buttonDetails);
         } else if (activeTraitName === 'heads') {
-            setActiveHead(buttonDetails.path);
+            setActiveHead(buttonDetails);
         } else if (activeTraitName === 'pets') {
-            setActivePet(buttonDetails.path);
+            setActivePet(buttonDetails);
         }
 
         console.log(buttonDetails.path);
@@ -99,7 +90,7 @@ export default function TraitsOption({
             position="relative"
             bg={"white"}
         >
-            <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>Select Traits</TopBar>
+            <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>{activeTraitName}</TopBar>
             <ButtonList activeTrait={activeTrait} setLayerImage={setLayerImageOncanvas} />
         </Box>
     )
