@@ -24,7 +24,7 @@ export default function MintPage() {
             fontFamily="Amatic SC"
             direction={['column', 'column', 'row', 'row']}
             h="100%"
-
+            pt={3}
         >
             <SideBar
                 activeTrait={activeTrait} setActiveTrait={setActiveTrait}
@@ -44,6 +44,11 @@ export default function MintPage() {
                 activeFace={activeFace}
                 activeHead={activeHead}
                 activePet={activePet}
+                setActiveBackground={setActiveBackground}
+                setActiveBody={setActiveBody}
+                setActiveFace={setActiveFace}
+                setActiveHead={setActiveHead}
+                setActivePet={setActivePet}
             />
             <Selected
                 activeBackground={activeBackground}

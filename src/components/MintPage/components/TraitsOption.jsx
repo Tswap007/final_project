@@ -79,10 +79,7 @@ export default function TraitsOption({
         } else if (activeTraitName === 'pets') {
             setActivePet(buttonDetails);
         }
-
-        console.log(buttonDetails.path);
     }
-    console.log(activeTraitName);
     return (
         <Box
             as="aside"

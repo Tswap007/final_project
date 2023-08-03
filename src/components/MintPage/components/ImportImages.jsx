@@ -7,7 +7,7 @@ import bg6 from "../attributes/background/background_06.svg";
 
 export function getBackgrounds() {
     return [
-        { path: bg1, label: "Background 1" },
+        { path: bg1, label: "Starry Night" },
         { path: bg2, label: "Background 2" },
         { path: bg3, label: "Background 3" },
         { path: bg4, label: "Background 4" },

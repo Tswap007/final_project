@@ -1,13 +1,18 @@
-import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue, IconButton } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
-import bg1 from "../attributes/background/background_02.svg"
-import head1 from "../attributes/head/head_01.svg"
-import face1 from "../attributes/face/face_01.svg"
-import body1 from "../attributes/body/body_01.svg"
-import pet1 from "../attributes/pet/pet_01.svg"
+import { BsShuffle, BsFillTrashFill } from 'react-icons/bs';
+import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
 
-const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePet }) => {
+
+const Canvas = ({
+    activeBackground, activeBody,
+    activeFace, activeHead,
+    activePet, setActiveBackground,
+    setActiveBody, setActiveFace,
+    setActiveHead, setActivePet,
+}) => {
+
     const [backgroundImage, setBackgroundImage] = useState(null);
     const [headImage, setHeadImage] = useState(null);
     const [faceImage, setFaceImage] = useState(null);
@@ -62,22 +67,83 @@ const Canvas = ({ activeBackground, activeBody, activeFace, activeHead, activePe
         };
     }, [activePet]);
 
+    function getRandomElementFromArray(array) {
+        const randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
+    }
+
+    function shuffleAll({ setActiveBackground, setActiveBody, setActiveFace, setActiveHead, setActivePet }) {
+        const backgrounds = getBackgrounds();
+        const bodies = getBodies();
+        const faces = getFaces();
+        const heads = getHeads();
+        const pets = getPets();
+
+        setActiveBackground(getRandomElementFromArray(backgrounds))
+        setActiveBody(getRandomElementFromArray(bodies))
+        setActiveFace(getRandomElementFromArray(faces))
+        setActiveHead(getRandomElementFromArray(heads))
+        setActivePet(getRandomElementFromArray(pets))
+
+    }
+
+    function clearAll({ setActiveBackground, setActiveBody, setActiveFace, setActiveHead, setActivePet }) {
+        setActiveBackground({})
+        setActiveBody({})
+        setActiveFace({})
+        setActiveHead({})
+        setActivePet({})
+        setBackgroundImage(null)
+        setBodyImage(null)
+        setFaceImage(null)
+        setHeadImage(null)
+        setPetImage(null)
+    }
+
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;
 
     return (
         <Flex bg={'blackAlpha.800'} width={stageWidth} height="auto" direction="column">
             <Box
                 w="100%"
-                h="10%"
-                bg={'black.800'}
+                bg={'white'}
                 borderWidth="0.5px"
                 borderLeft={0}
-                opacity="40%"
                 borderColor="gray.400"
                 p={3}
                 display={{ base: "none", md: "block" }}
+                justifyContent='space-between'
+                alignItems="center"
             >
-                <Text color={'white'}>Shuffle</Text>
+                <Flex>
+                    <IconButton
+                        aria-label="Delete All"
+                        icon={<BsFillTrashFill />}
+                        color="red"
+                        variant="ghost"
+                        onClick={() => clearAll({
+                            setActiveBackground,
+                            setActiveBody,
+                            setActiveFace,
+                            setActiveHead,
+                            setActivePet
+                        })}
+                    />
+                    <IconButton
+                        aria-label="Shuffle"
+                        icon={<BsShuffle />}
+                        color="black"
+                        variant="ghost"
+                        onClick={() => shuffleAll({
+                            setActiveBackground,
+                            setActiveBody,
+                            setActiveFace,
+                            setActiveHead,
+                            setActivePet
+                        })}
+
+                    />
+                </Flex>
             </Box>
             <Box
                 width="100%"
