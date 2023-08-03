@@ -3,7 +3,7 @@ import { TopBar } from "./TraitsOption";
 import { BsFillTrashFill } from 'react-icons/bs';
 import { motion } from "framer-motion";
 
-function SelectedTraits({ path, label, onClick }) {
+function SelectedTraits({ path, label, onClick, setActiveBackground }) {
     return (
         <Box
             justifyContent="space-between"
@@ -29,7 +29,7 @@ function SelectedTraits({ path, label, onClick }) {
                 <IconButton
                     aria-label="Delete"
                     icon={<BsFillTrashFill />}
-                    onClick={onClick}
+                    onClick={() => onClick({ setActiveBackground })}
                     color="red"
                     bg="red.100"
                     borderRadius={20}
@@ -44,7 +44,7 @@ function checkIfAnyTraitSelected(selectedTraits) {
     return selectedTraits.some((selected) => selected.path);
 }
 
-function SelectedTraitsList({ activeBackground, activeBody, activeFace, activeHead, activePet, selectedTraits }) {
+function SelectedTraitsList({ selectedTraits, onClick, setActiveBackground }) {
 
     const shouldRenderList = checkIfAnyTraitSelected(selectedTraits);
 
@@ -54,7 +54,7 @@ function SelectedTraitsList({ activeBackground, activeBody, activeFace, activeHe
             {shouldRenderList ? (
                 selectedTraits.map((selected, index) => {
                     if (selected.path) {
-                        return <SelectedTraits key={index} path={selected.path} label={selected.label} />;
+                        return <SelectedTraits key={index} path={selected.path} label={selected.label} onClick={onClick} setActiveBackground={setActiveBackground} />;
                     }
                     return null;
                 })
@@ -131,6 +131,10 @@ export default function Selected({
         { path: activePet.path, label: activePet.label },
     ];
 
+    function clearSelection({ setActiveBackground }) { //possible easier way to handle th delete button copy from the canvas clear all
+        setActiveBackground({});
+    }
+
     return (
         <Box
             as="aside"
@@ -139,7 +143,7 @@ export default function Selected({
             bg={"white"}
         >
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
-            <SelectedTraitsList activeBackground={activeBackground} activeBody={activeBody} activeFace={activeFace} activeHead={activeHead} activePet={activePet} selectedTraits={selectedTraits} />
+            <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} setActiveBackground={setActiveBackground} />
             <MintButton selectedTraits={selectedTraits} />
         </Box>
     )

@@ -1,4 +1,4 @@
-import { Box, Flex, useBreakpointValue, IconButton } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue, IconButton, Tooltip } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import { BsShuffle, BsFillTrashFill } from 'react-icons/bs';
@@ -116,33 +116,36 @@ const Canvas = ({
                 alignItems="center"
             >
                 <Flex>
-                    <IconButton
-                        aria-label="Delete All"
-                        icon={<BsFillTrashFill />}
-                        color="red"
-                        variant="ghost"
-                        onClick={() => clearAll({
-                            setActiveBackground,
-                            setActiveBody,
-                            setActiveFace,
-                            setActiveHead,
-                            setActivePet
-                        })}
-                    />
-                    <IconButton
-                        aria-label="Shuffle"
-                        icon={<BsShuffle />}
-                        color="black"
-                        variant="ghost"
-                        onClick={() => shuffleAll({
-                            setActiveBackground,
-                            setActiveBody,
-                            setActiveFace,
-                            setActiveHead,
-                            setActivePet
-                        })}
-
-                    />
+                    <Tooltip hasArrow placement='top' label="Clear Canvas">
+                        <IconButton
+                            aria-label="Delete All"
+                            icon={<BsFillTrashFill />}
+                            color="red"
+                            variant="ghost"
+                            onClick={() => clearAll({
+                                setActiveBackground,
+                                setActiveBody,
+                                setActiveFace,
+                                setActiveHead,
+                                setActivePet
+                            })}
+                        />
+                    </Tooltip>
+                    <Tooltip hasArrow placement='top' label="Shuffle">
+                        <IconButton
+                            aria-label="Shuffle"
+                            icon={<BsShuffle />}
+                            color="black"
+                            variant="ghost"
+                            onClick={() => shuffleAll({
+                                setActiveBackground,
+                                setActiveBody,
+                                setActiveFace,
+                                setActiveHead,
+                                setActivePet
+                            })}
+                        />
+                    </Tooltip>
                 </Flex>
             </Box>
             <Box
