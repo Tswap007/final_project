@@ -7,10 +7,10 @@ const faces = getFaces();
 const heads = getHeads();
 const pets = getPets();
 
-export function Buttons({ children, onClick, ...rest }) {
+export function Buttons({ children, onClick, isSelected, ...rest }) {
     return (
         <Button
-            bg="black.800"
+            bg={isSelected ? "#313240" : "black.800"}
             w="100%"
             textColor="white"
             variant="ghost"
@@ -31,24 +31,28 @@ export function Buttons({ children, onClick, ...rest }) {
     );
 }
 
-function SideBarContents({ changeActiveTrait }) {
+function SideBarContents({ changeActiveTrait, isSelected }) {
     return (
         <Stack spacing={0} align="center" p={0} direction={['row', 'row', 'column', 'column']}>
-            <Buttons onClick={() => changeActiveTrait(backgrounds, "backgrounds")}>BackGround</Buttons>
-            <Buttons onClick={() => changeActiveTrait(bodies, "bodies")}>Body</Buttons>
-            <Buttons onClick={() => changeActiveTrait(heads, "heads")}>Head</Buttons>
-            <Buttons onClick={() => changeActiveTrait(faces, "expressions")}>Expression</Buttons>
-            <Buttons onClick={() => changeActiveTrait(pets, "pets")}>Pet</Buttons>
+            <Buttons onClick={() => changeActiveTrait(backgrounds, "backgrounds")} isSelected={isSelected("backgrounds")}>BackGround</Buttons>
+            <Buttons onClick={() => changeActiveTrait(bodies, "bodies")} isSelected={isSelected("bodies")}>Body</Buttons>
+            <Buttons onClick={() => changeActiveTrait(heads, "heads")} isSelected={isSelected("heads")}>Head</Buttons>
+            <Buttons onClick={() => changeActiveTrait(faces, "expressions")} isSelected={isSelected("expressions")}>Expression</Buttons>
+            <Buttons onClick={() => changeActiveTrait(pets, "pets")} isSelected={isSelected("pets")}>Pet</Buttons>
         </Stack>
     );
 }
 
-export default function SideBar({ setActiveTrait, setActiveTraitName }) {
+export default function SideBar({ setActiveTrait, setActiveTraitName, activeTraitName }) {
     const changeActiveTraitInSideBar = (traitArray, traitName) => {
         setActiveTrait(traitArray);
         setActiveTraitName(traitName);
 
     };
+
+    function isSelected(name) {
+        return activeTraitName === name;
+    }
 
     return (
         <Box
@@ -62,7 +66,7 @@ export default function SideBar({ setActiveTrait, setActiveTraitName }) {
             borderTop={0}
             borderLeft={0}
         >
-            <SideBarContents changeActiveTrait={changeActiveTraitInSideBar} />
+            <SideBarContents changeActiveTrait={changeActiveTraitInSideBar} isSelected={isSelected} />
         </Box>
     );
 }

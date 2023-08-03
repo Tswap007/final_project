@@ -3,7 +3,7 @@ import { TopBar } from "./TraitsOption";
 import { BsFillTrashFill } from 'react-icons/bs';
 import { motion } from "framer-motion";
 
-function SelectedTraits({ path, label, onClick, setActiveBackground }) {
+function SelectedTraits({ path, label, onClick, setter }) {
     return (
         <Box
             justifyContent="space-between"
@@ -29,7 +29,7 @@ function SelectedTraits({ path, label, onClick, setActiveBackground }) {
                 <IconButton
                     aria-label="Delete"
                     icon={<BsFillTrashFill />}
-                    onClick={() => onClick({ setActiveBackground })}
+                    onClick={() => onClick({ setter })}// words now to make it modular
                     color="red"
                     bg="red.100"
                     borderRadius={20}
@@ -44,7 +44,7 @@ function checkIfAnyTraitSelected(selectedTraits) {
     return selectedTraits.some((selected) => selected.path);
 }
 
-function SelectedTraitsList({ selectedTraits, onClick, setActiveBackground }) {
+function SelectedTraitsList({ selectedTraits, onClick }) {
 
     const shouldRenderList = checkIfAnyTraitSelected(selectedTraits);
 
@@ -54,7 +54,7 @@ function SelectedTraitsList({ selectedTraits, onClick, setActiveBackground }) {
             {shouldRenderList ? (
                 selectedTraits.map((selected, index) => {
                     if (selected.path) {
-                        return <SelectedTraits key={index} path={selected.path} label={selected.label} onClick={onClick} setActiveBackground={setActiveBackground} />;
+                        return <SelectedTraits key={index} path={selected.path} label={selected.label} onClick={onClick} setter={selected.setter} />;
                     }
                     return null;
                 })
@@ -108,7 +108,6 @@ function MintButton({ selectedTraits }) {
 
 
 export default function Selected({
-    activeTraitName,
     setActiveBackground,
     setActiveBody,
     setActiveFace,
@@ -124,15 +123,15 @@ export default function Selected({
 
     // Combine the selected traits objects into an array
     const selectedTraits = [
-        { path: activeBackground.path, label: activeBackground.label },
-        { path: activeBody.path, label: activeBody.label },
-        { path: activeFace.path, label: activeFace.label },
-        { path: activeHead.path, label: activeHead.label },
-        { path: activePet.path, label: activePet.label },
+        { path: activeBackground.path, label: activeBackground.label, setter: setActiveBackground },
+        { path: activeBody.path, label: activeBody.label, setter: setActiveBody },
+        { path: activeFace.path, label: activeFace.label, setter: setActiveFace },
+        { path: activeHead.path, label: activeHead.label, setter: setActiveHead },
+        { path: activePet.path, label: activePet.label, setter: setActivePet },
     ];
 
-    function clearSelection({ setActiveBackground }) { //possible easier way to handle th delete button copy from the canvas clear all
-        setActiveBackground({});
+    function clearSelection({ setter }) {
+        setter({});
     }
 
     return (
@@ -143,7 +142,7 @@ export default function Selected({
             bg={"white"}
         >
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
-            <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} setActiveBackground={setActiveBackground} />
+            <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} />
             <MintButton selectedTraits={selectedTraits} />
         </Box>
     )

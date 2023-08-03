@@ -24,7 +24,7 @@ export function TopBar({ children, textColor, ...rest }) {
 
 }
 
-function ButtonsWithImages({ path, label, onClick }) {
+function ButtonsWithImages({ path, label, onClick, isSelected }) {
     return (
         <>
             <Box align="center" padding={1}>
@@ -40,6 +40,9 @@ function ButtonsWithImages({ path, label, onClick }) {
                     alignItems="center"
                     justifyContent="center"
                     onClick={onClick}
+                    borderWidth={isSelected ? "4px" : "0"}
+                    borderColor={isSelected ? "blue.400" : "transparent"}
+                    _focus={{ outline: "none" }}
                 >
                     <Image src={path} alt={label} width="100%" height="100%" borderRadius="10px" />
                 </Button>
@@ -50,10 +53,10 @@ function ButtonsWithImages({ path, label, onClick }) {
 }
 
 
-const ButtonList = ({ activeTrait, setLayerImage }) => (
+const ButtonList = ({ activeTrait, setLayerImage, isSelected, selectedTraitsArray }) => (
     <Flex flexWrap="wrap" padding={2}>
         {activeTrait.map((button, index) => (
-            <ButtonsWithImages key={index} path={button.path} label={button.label} onClick={() => setLayerImage(button)} />
+            <ButtonsWithImages key={index} path={button.path} label={button.label} onClick={() => setLayerImage(button)} isSelected={isSelected(button.path, selectedTraitsArray)} />
         ))}
     </Flex>
 );
@@ -61,6 +64,9 @@ const ButtonList = ({ activeTrait, setLayerImage }) => (
 export default function TraitsOption({
     activeTrait,
     activeTraitName,
+    activeBackground, activeBody,
+    activeFace, activeHead,
+    activePet,
     setActiveBackground,
     setActiveBody,
     setActiveFace,
@@ -80,6 +86,14 @@ export default function TraitsOption({
             setActivePet(buttonDetails);
         }
     }
+
+    const selectedTraitsArray = [activeBackground.path, activeBody.path, activeFace.path, activeHead.path, activePet.path];
+
+    function isSelected(path, selectedTraitsArray) {
+        const isSelected = selectedTraitsArray.includes(path);
+        return (isSelected);
+
+    }
     return (
         <Box
             as="aside"
@@ -88,7 +102,7 @@ export default function TraitsOption({
             bg={"white"}
         >
             <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>{activeTraitName}</TopBar>
-            <ButtonList activeTrait={activeTrait} setLayerImage={setLayerImageOncanvas} />
+            <ButtonList activeTrait={activeTrait} setLayerImage={setLayerImageOncanvas} isSelected={isSelected} selectedTraitsArray={selectedTraitsArray} />
         </Box>
     )
 }

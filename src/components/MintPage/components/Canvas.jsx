@@ -1,8 +1,8 @@
 import { Box, Flex, useBreakpointValue, IconButton, Tooltip } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import { BsShuffle, BsFillTrashFill } from 'react-icons/bs';
 import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
+import useImage from 'use-image';
 
 
 const Canvas = ({
@@ -13,59 +13,17 @@ const Canvas = ({
     setActiveHead, setActivePet,
 }) => {
 
-    const [backgroundImage, setBackgroundImage] = useState(null);
-    const [headImage, setHeadImage] = useState(null);
-    const [faceImage, setFaceImage] = useState(null);
-    const [bodyImage, setBodyImage] = useState(null);
-    const [petImage, setPetImage] = useState(null);
+
+    const [backgroundImage] = useImage(activeBackground.path)
+    const [headImage] = useImage(activeHead.path)
+    const [faceImage] = useImage(activeFace.path)
+    const [bodyImage] = useImage(activeBody.path)
+    const [petImage] = useImage(activePet.path)
 
     const stageHeight = useBreakpointValue({ base: 350, md: 380, lg: 450 });
     const stageWidth = useBreakpointValue({ base: 350, md: 380, lg: 450 });
 
-    useEffect(() => {
-        // Simulating backgroundImage loading with a delay
-        const bgImg = new window.Image(activeBackground);
-        bgImg.src = activeBackground.path;
-        bgImg.onload = () => {
-            setBackgroundImage(bgImg);
-        };
-    }, [activeBackground]);
 
-    useEffect(() => {
-        // Simulating headImage loading with a delay
-        const headImg = new window.Image();
-        headImg.src = activeHead.path;
-        headImg.onload = () => {
-            setHeadImage(headImg);
-        };
-    }, [activeHead]);
-
-    useEffect(() => {
-        // Simulating faceImage loading with a delay
-        const faceImg = new window.Image();
-        faceImg.src = activeFace.path;
-        faceImg.onload = () => {
-            setFaceImage(faceImg);
-        };
-    }, [activeFace]);
-
-    useEffect(() => {
-        // Simulating bodyImage loading with a delay
-        const bodyImg = new window.Image();
-        bodyImg.src = activeBody.path;
-        bodyImg.onload = () => {
-            setBodyImage(bodyImg);
-        };
-    }, [activeBody]);
-
-    useEffect(() => {
-        // Simulating petImage loading with a delay
-        const petImg = new window.Image();
-        petImg.src = activePet.path;
-        petImg.onload = () => {
-            setPetImage(petImg);
-        };
-    }, [activePet]);
 
     function getRandomElementFromArray(array) {
         const randomIndex = Math.floor(Math.random() * array.length);
@@ -93,11 +51,6 @@ const Canvas = ({
         setActiveFace({})
         setActiveHead({})
         setActivePet({})
-        setBackgroundImage(null)
-        setBodyImage(null)
-        setFaceImage(null)
-        setHeadImage(null)
-        setPetImage(null)
     }
 
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;

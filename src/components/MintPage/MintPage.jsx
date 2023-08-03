@@ -17,6 +17,10 @@ export default function MintPage() {
     const [activeHead, setActiveHead] = useState({})
     const [activePet, setActivePet] = useState({})
 
+    console.log(activeTraitName)
+    console.log(activeTrait)
+    console.log(activeBackground)
+
     return (
         <Flex
             bg="#7C89FF"
@@ -32,6 +36,11 @@ export default function MintPage() {
             <TraitsOption
                 activeTrait={activeTrait}
                 activeTraitName={activeTraitName}
+                activeBackground={activeBackground}
+                activeBody={activeBody}
+                activeFace={activeFace}
+                activeHead={activeHead}
+                activePet={activePet}
                 setActiveBackground={setActiveBackground}
                 setActiveBody={setActiveBody}
                 setActiveFace={setActiveFace}
