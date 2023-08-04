@@ -1,6 +1,6 @@
 import { Box, Flex, useBreakpointValue, IconButton, Tooltip } from '@chakra-ui/react';
 import { Stage, Layer, Image } from 'react-konva';
-import { BsShuffle, BsFillTrashFill } from 'react-icons/bs';
+import { BsShuffle, BsFillTrashFill, BsDownload } from 'react-icons/bs';
 import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
 import useImage from 'use-image';
 
@@ -11,6 +11,7 @@ const Canvas = ({
     activePet, setActiveBackground,
     setActiveBody, setActiveFace,
     setActiveHead, setActivePet,
+    stageRef
 }) => {
 
 
@@ -52,6 +53,22 @@ const Canvas = ({
         setActiveHead({})
         setActivePet({})
     }
+
+
+    const handleSaveImage = async () => {
+        const dataURL = await stageRef.current.toDataURL();
+        if (dataURL) {
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'My_Wanderer.png';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
+
 
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;
 
@@ -99,6 +116,15 @@ const Canvas = ({
                             })}
                         />
                     </Tooltip>
+                    <Tooltip hasArrow placement='top' label="Download">
+                        <IconButton
+                            aria-label="Download"
+                            icon={<BsDownload />}
+                            color="black"
+                            variant="ghost"
+                            onClick={handleSaveImage}
+                        />
+                    </Tooltip>
                 </Flex>
             </Box>
             <Box
@@ -113,7 +139,7 @@ const Canvas = ({
                 minW={stageWidth}// Set a minimum width for the Box
             // borderRadius="20px"
             >
-                <Stage width={stageWidth} height={stageHeight}>
+                <Stage width={stageWidth} height={stageHeight} ref={stageRef}>
                     <Layer>
                         <Image image={backgroundImage} width={stageWidth} height={stageHeight} />
                     </Layer>

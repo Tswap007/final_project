@@ -2,6 +2,7 @@ import { Box, Flex, Image, IconButton, Text, Center, AbsoluteCenter, Button } fr
 import { TopBar } from "./TraitsOption";
 import { BsFillTrashFill } from 'react-icons/bs';
 import { motion } from "framer-motion";
+import MintButton from "./Mint";
 
 function SelectedTraits({ path, label, onClick, setter }) {
     return (
@@ -40,7 +41,7 @@ function SelectedTraits({ path, label, onClick, setter }) {
 }
 
 
-function checkIfAnyTraitSelected(selectedTraits) {
+export function checkIfAnyTraitSelected(selectedTraits) {
     return selectedTraits.some((selected) => selected.path);
 }
 
@@ -86,26 +87,6 @@ function EmptyPageInfo() {
 }
 
 
-function MintButton({ selectedTraits }) {
-    // Check if any selected trait is not an empty object
-    const shouldRenderList = checkIfAnyTraitSelected(selectedTraits);
-    return (
-        shouldRenderList ? (
-            <Center>
-                <Button
-                    width="70%"
-                    background="#5FC95D"
-                    mb={3}
-                    borderRadius="24px"
-                    boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
-                >
-                    MINT
-                </Button>
-            </Center>
-        ) : null
-    );
-}
-
 
 export default function Selected({
     setActiveBackground,
@@ -117,7 +98,8 @@ export default function Selected({
     activeBody,
     activeFace,
     activeHead,
-    activePet
+    activePet,
+    stageRef
 }
 ) {
 
@@ -143,7 +125,7 @@ export default function Selected({
         >
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
             <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} />
-            <MintButton selectedTraits={selectedTraits} />
+            <MintButton selectedTraits={selectedTraits} stageRef={stageRef} />
         </Box>
     )
 

@@ -4,7 +4,7 @@ import Noise from '../../bg/noise.svg';
 import SideBar from "./components/SideBar";
 import TraitsOption from "./components/TraitsOption";
 import Selected from "./components/Selected";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { getBackgrounds } from "./components/ImportImages";
 
 export default function MintPage() {
@@ -16,10 +16,7 @@ export default function MintPage() {
     const [activeFace, setActiveFace] = useState({})
     const [activeHead, setActiveHead] = useState({})
     const [activePet, setActivePet] = useState({})
-
-    console.log(activeTraitName)
-    console.log(activeTrait)
-    console.log(activeBackground)
+    const stageRef = useRef(null);
 
     return (
         <Flex
@@ -58,6 +55,7 @@ export default function MintPage() {
                 setActiveFace={setActiveFace}
                 setActiveHead={setActiveHead}
                 setActivePet={setActivePet}
+                stageRef={stageRef}
             />
             <Selected
                 activeBackground={activeBackground}
@@ -70,6 +68,7 @@ export default function MintPage() {
                 setActiveFace={setActiveFace}
                 setActiveHead={setActiveHead}
                 setActivePet={setActivePet}
+                stageRef={stageRef}
             />
         </Flex>
     );
