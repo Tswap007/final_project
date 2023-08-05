@@ -19,7 +19,7 @@ function Logo(props) {
 // MenuToggle component
 function MenuToggle({ toggle, isOpen }) {
     return (
-        <Box display={{ base: "block", md: "block", lg: "none" }} onClick={toggle} zIndex={1}>
+        <Box display={{ base: "block", md: "block", lg: "none" }} onClick={toggle} zIndex={1} mt={4}>
             {isOpen ? <IconButton icon={<CloseIcon />} /> : <IconButton icon={<HamburgerIcon />} />}
         </Box>
     );
@@ -141,7 +141,6 @@ export default function NavBar(props) {
         <>
             <NavBarContainer {...props}>
                 <Logo width={["100px", "120px"]} height='auto' />
-                <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
                 <MenuLinksBox background="#FFF" width="50%">
                     <MenuItem to="/">Home</MenuItem>
@@ -149,10 +148,17 @@ export default function NavBar(props) {
                     <MenuItem to="/governance">Governance</MenuItem>
                     <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
                 </MenuLinksBox>
-                {/* <MenuLinksBox width="15%" background="#5FC95D">
-                    <MenuItem>Connect Wallet</MenuItem>
-                </MenuLinksBox> */}
-                <ConnectButton />
+                <Box
+                    zIndex={2}
+                    height="35px"
+                    mt={4}
+                >
+                    <ConnectButton
+                        accountStatus={{ smallScreen: 'avatar', largeScreen: 'full', }}
+                        chainStatus="icon"
+                    />
+                </Box>
+                <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <Clouds src={cloud2} top={4} right={4} width={["40%", "15%"]} />
                 <Clouds src={cloud2} top={3} right={["15%", "calc(35% + 10px)"]} width="15%" display={{ base: 'none', md: 'block', lg: "block" }} />
             </NavBarContainer>
