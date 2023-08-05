@@ -5,6 +5,7 @@ import cloud2 from "../../assets/s2Cloud.svg";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 // Logo component
 function Logo(props) {
@@ -148,9 +149,10 @@ export default function NavBar(props) {
                     <MenuItem to="/governance">Governance</MenuItem>
                     <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
                 </MenuLinksBox>
-                <MenuLinksBox width="15%" background="#5FC95D">
+                {/* <MenuLinksBox width="15%" background="#5FC95D">
                     <MenuItem>Connect Wallet</MenuItem>
-                </MenuLinksBox>
+                </MenuLinksBox> */}
+                <ConnectButton />
                 <Clouds src={cloud2} top={4} right={4} width={["40%", "15%"]} />
                 <Clouds src={cloud2} top={3} right={["15%", "calc(35% + 10px)"]} width="15%" display={{ base: 'none', md: 'block', lg: "block" }} />
             </NavBarContainer>
