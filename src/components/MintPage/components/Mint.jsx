@@ -10,10 +10,16 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     async function getImageUrl() {
         const dataURL = await stageRef.current.toDataURL();
-        console.log(dataURL);
+        for (let i = 0; i < selectedTraits.length; i++) {
+            console.log(selectedTraits[i].label);
+        }
         return dataURL;
-
     };
+
+    async function uploadImageUrl() {
+        imageUrl = await (getImageUrl());
+
+    }
 
     return (
         shouldRenderList ? (
