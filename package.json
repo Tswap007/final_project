@@ -21,6 +21,7 @@
     "framer-motion": "^10.13.1",
     "glob": "^10.3.3",
     "konva": "^9.2.0",
+    "nft.storage": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
