@@ -1,6 +1,7 @@
-import { Center, Button } from "@chakra-ui/react";
+import { Center, Button, Tooltip } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
+import { useEffect, useState } from "react";
 
 
 const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
@@ -60,25 +61,39 @@ export default function MintButton({ selectedTraits, stageRef }) {
         console.log(metadata)
         return metadata;
     }
-    function seeLength() {
-        console.log(selectedTraits.length)
-    }
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [numberLeft, setNumberLeft] = useState(5);
+
+    useEffect(() => {
+        let count = 0;
+        for (let i = 0; i < selectedTraits.length; i++) {
+            if (selectedTraits[i].label && selectedTraits[i].label.trim() !== "") {
+                count++;
+            }
+        }
+
+        setNumberLeft(5 - count);
+        setIsButtonDisabled(count !== 5);
+    }, [selectedTraits]);
 
 
     return (
         shouldRenderList ? (
             <Center>
-                <Button
-                    width="70%"
-                    background="#5FC95D"
-                    mb={3}
-                    borderRadius="24px"
-                    boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
-                    // isDisabled={!selectedTraits.length !== 5}
-                    onClick={seeLength}
-                >
-                    MINT
-                </Button>
+                <Tooltip label={`Select ${numberLeft} more trait${numberLeft === 1 ? "" : "s"}`} isOpen={isButtonDisabled}>
+                    <Button
+                        width="70%"
+                        background="#5FC95D"
+                        mb={3}
+                        borderRadius="24px"
+                        boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
+                        isDisabled={isButtonDisabled}
+                        onClick={uploadImageAndGetMetadata}
+                    >
+                        MINT
+                    </Button>
+                </Tooltip>
             </Center>
         ) : null
     );

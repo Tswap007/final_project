@@ -107,8 +107,8 @@ export default function Selected({
     const selectedTraits = [
         { path: activeBackground.path, label: activeBackground.label, setter: setActiveBackground },
         { path: activeBody.path, label: activeBody.label, setter: setActiveBody },
-        { path: activeFace.path, label: activeFace.label, setter: setActiveFace },
         { path: activeHead.path, label: activeHead.label, setter: setActiveHead },
+        { path: activeFace.path, label: activeFace.label, setter: setActiveFace },
         { path: activePet.path, label: activePet.label, setter: setActivePet },
     ];
 
