@@ -14,6 +14,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     const shouldRenderList = checkIfAnyTraitSelected(selectedTraits);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [numberLeft, setNumberLeft] = useState(5);
+    const [metaDataURI, setMetaDataURI] = useState("");
 
     useEffect(() => {
         let count = 0;
@@ -87,50 +88,55 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return metadataUrl;
     }
 
-    // // mint function is giving me a tough time but I shall prevail LOL..
-    // const { config } = usePrepareContractWrite({
-    //     address: '0x8857244FE8468B0de8826D1e7d7424E8F237A5f7',
-    //     abi: [
-    //         {
-    //             "inputs": [
-    //                 {
-    //                     "internalType": "string",
-    //                     "name": "uri",
-    //                     "type": "string"
-    //                 }
-    //             ],
-    //             "name": "safeMint",
-    //             "outputs": [],
-    //             "stateMutability": "nonpayable",
-    //             "type": "function"
-    //         },
-    //     ],
-    //     functionName: 'safeMint',
-    //     args: ["ipfs://bafyreihajdxtg2ixvngsizv4wlmrll757bp2a6tfz2yfkijoqljg24gdau/metadata.json"]
-    // })
-    // const { data, write } = useContractWrite(config);
-    // const { isLoading, isSuccess } = useWaitForTransaction({
-    //     hash: data?.hash,
-    // });
-    // if (isLoading) {
-    //     console.log("Transaction Loading")
-    // }
-    // if (isSuccess) {
-    //     console.log("TX succesful")
-    // }
+    // mint function is giving me a tough time but I shall prevail LOL..
+    const { isConnected, address } = useAccount();
+    const { config } = usePrepareContractWrite({
+        address: '0xf81352C5Cdd5665AB735CEf0947e2EF3230F0bC5',
+        abi: [
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "uri",
+                        "type": "string"
+                    }
+                ],
+                "name": "safeMint",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+        ],
+        functionName: 'safeMint',
+        args: [address, metaDataURI]
+    })
+    const { data, write } = useContractWrite(config);
+    const { isLoading, isSuccess } = useWaitForTransaction({
+        hash: data?.hash,
+    });
+    if (isLoading) {
+        console.log("Transaction Loading")
+    }
+    if (isSuccess) {
+        console.log("TX succesful")
+    }
 
-    // const { isConnected } = useAccount();
-    // const { openConnectModal } = useConnectModal();
+    const { openConnectModal } = useConnectModal();
 
-    // const handleMintButtonClick = async () => {
-    //     if (isConnected) {
-    //         const metaDataURI = await uploadMetadataToIPFSAndReturnURI();
-    //         config.args = [metaDataURI]; // Update the args with the actual URI
-    //         console.log(config.args)
-    //         write?.();
-    //     }
-    //     else { openConnectModal() };
-    // };
+    const handleMintButtonClick = async () => {
+        if (isConnected) {
+            const metaDataURI = await uploadMetadataToIPFSAndReturnURI();
+            setMetaDataURI(metaDataURI);
+            console.log(metaDataURI)
+            write();
+        }
+        else { openConnectModal() };
+    };
 
 
     return (
@@ -144,9 +150,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
                         borderRadius="24px"
                         boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
                         isDisabled={isButtonDisabled || isLoading}
-                    // onClick={write()}
+                        onClick={handleMintButtonClick}
                     >
-                        MINT
+                        {isLoading ? "Minting..." : "Mint"}
                     </Button>
                 </Tooltip>
             </Center>
