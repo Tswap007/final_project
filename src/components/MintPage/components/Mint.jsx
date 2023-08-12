@@ -1,10 +1,10 @@
 // Import required modules and components
 import React, { useEffect, useState } from "react";
-import { Center, Button, Tooltip } from "@chakra-ui/react";
+import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
-import { prepareWriteContract, writeContract } from "wagmi/actions"
+import { prepareWriteContract, writeContract, waitForTransaction } from "wagmi/actions"
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 // Initialize NFT Storage client
@@ -44,8 +44,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
     async function uploadMetadataToIPFSAndReturnURI() {
         const imageUrl = await getImageUrl();
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
+        setMessage("Collecting Image From Canvas");
         const imageFile = new File([imageBlob], 'wanderer.png', { type: 'image/png' });
-
+        setMessage("Uploading Image");
         const metadata = await client.store({
             name: 'Wanderer',
             description: 'Who says that this isn\'t fun',
@@ -61,6 +62,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
         });
 
         const metaDataURL = metadata.url;
+        setMessage("Upload Succesful")
         console.log(metaDataURL);
         return metaDataURL;
     }
@@ -87,25 +89,43 @@ export default function MintButton({ selectedTraits, stageRef }) {
             functionName: 'safeMint',
             args: [address, metaDataURL],
         });
+        setMessage("Preparing Transaction");
 
         return config;
     }
 
     // Write mint contract
     async function writeMintContract(request) {
+        setMessage("Awaiting Wallet Confrimation");
         const { hash } = await writeContract(request);
+        setMessage("Confirming Transaction");
         return hash;
     }
 
     const { openConnectModal } = useConnectModal();
+    const [message, setMessage] = useState('');
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const openModalWithMessage = (message) => {
+        setMessage(message);
+        onOpen();
+    }
+    const closePopUp = () => {
+        onClose();
+    }
 
+    const [isMinting, setIsMinting] = useState(false);
     // Handle mint button click
     const handleMintButtonClick = async () => {
         if (isConnected) {
+            setIsMinting(true);
+            openModalWithMessage();
             const metaDataURL = await uploadMetadataToIPFSAndReturnURI();
             const request = await prepareContractWrite(metaDataURL);
             const hash = await writeMintContract(request);
-            console.log(hash);
+            const data = await waitForTransaction({ hash });
+            setMessage("Transaction Completed")
+            console.log(data);
+            setIsMinting(false)
         } else {
             openConnectModal();
         }
@@ -125,12 +145,27 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     mb={3}
                     borderRadius="24px"
                     boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
-                    isDisabled={isButtonDisabled}
+                    isDisabled={isButtonDisabled || isMinting}
+                    isLoading={isMinting}
+                    loadingText="Minting"
                     onClick={handleMintButtonClick}
                 >
                     Mint
                 </Button>
             </Tooltip>
+            <Modal isOpen={isOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Minting Status</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        {message}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" onClick={closePopUp}>Close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Center>
     ) : null;
 }
