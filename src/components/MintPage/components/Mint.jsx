@@ -11,7 +11,7 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
-// Smart contract address
+// NFT Smart contract address
 const ContractAddress = '0xf81352C5Cdd5665AB735CEf0947e2EF3230F0bC5';
 
 // Define the MintButton component
@@ -97,7 +97,6 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return hash;
     }
 
-    // Open connection modal
     const { openConnectModal } = useConnectModal();
 
     // Handle mint button click
