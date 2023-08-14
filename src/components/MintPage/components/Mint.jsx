@@ -21,6 +21,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     const shouldRenderList = checkIfAnyTraitSelected(selectedTraits);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [numberLeft, setNumberLeft] = useState(5);
+    const [imageUrl, setImageUrl] = useState("");
 
     // Update UI when selected traits change
     useEffect(() => {
@@ -44,6 +45,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     // Function to upload metadata to IPFS and return URI
     async function uploadMetadataToIPFSAndReturnURI() {
         const imageUrl = await getImageUrl();
+        setImageUrl(imageUrl);
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
         setMessage("Collecting Image From Canvas");
         const imageFile = new File([imageBlob], 'wanderer.png', { type: 'image/png' });
@@ -123,9 +125,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
             const metaDataURL = await uploadMetadataToIPFSAndReturnURI();
             const request = await prepareContractWrite(metaDataURL);
             const hash = await writeMintContract(request);
-            const data = await waitForTransaction({ hash });
+            const data = await waitForTransaction({ hash });// use this to get the tx status possibly save that in a state and then use that to create some logic for the modal.
             setMessage("Transaction Completed")
-            console.log(data);
+            console.log(data);// if data from transaciton is null or status is failed then render something went wrong try again
             setIsMinting(false)
         } else {
             openConnectModal();
@@ -166,7 +168,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     <ModalBody>
                         <Center>
                             <VStack spacing={4} mb={4}>
-                                <Image src={loadingGif} alt="LOGO ANIMATION" w="40%" h="auto" />
+                                <Image src={isMinting ? loadingGif : imageUrl} alt={isMinting ? "LOGO ANIMATION" : "Your Wanderer"} w={isMinting ? "40%" : "60%"} h="auto" />
                                 <span>{message}{isMinting ? "..." : "."}</span>
                             </VStack>
                         </Center>
