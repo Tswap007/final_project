@@ -1,12 +1,13 @@
 // Import required modules and components
 import React, { useEffect, useState } from "react";
-import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack } from "@chakra-ui/react";
+import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack, Link } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
 import { prepareWriteContract, writeContract, waitForTransaction } from "wagmi/actions"
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import loadingGif from "../../assets/loadingGif.gif"
+import failedImage from "../../assets/failed_image.svg"
 
 // Initialize NFT Storage client
 const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
@@ -105,6 +106,21 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return hash;
     }
 
+    async function txStatus(hash) {
+        const data = await waitForTransaction({ hash });
+        if (data.status === "success") {
+            setMessage("Transaction Successful")
+            setIsMinting(false);
+            setIsSuccess(true);
+            return data;
+        }
+        else {
+            setMessage("Something Went Wrong Pls Try Again...")
+            setIsMinting(false);
+            setIsSuccess(false);
+        }
+    }
+
     const { openConnectModal } = useConnectModal();//start modal work from here
     const [message, setMessage] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -117,6 +133,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     }
 
     const [isMinting, setIsMinting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     // Handle mint button click
     const handleMintButtonClick = async () => {
         if (isConnected) {
@@ -124,15 +141,26 @@ export default function MintButton({ selectedTraits, stageRef }) {
             openModalWithMessage();
             const metaDataURL = await uploadMetadataToIPFSAndReturnURI();
             const request = await prepareContractWrite(metaDataURL);
-            const hash = await writeMintContract(request);
-            const data = await waitForTransaction({ hash });// use this to get the tx status possibly save that in a state and then use that to create some logic for the modal.
-            setMessage("Transaction Completed")
-            console.log(data);// if data from transaciton is null or status is failed then render something went wrong try again
-            setIsMinting(false)
+            try {
+                const hash = await writeMintContract(request);
+                if (hash) {
+                    const data = await txStatus(hash);
+                    console.log(data);
+                } else {
+                    setMessage("Something Went Wrong Pls Try Again...");
+                    setIsMinting(false);
+                    setIsSuccess(false);
+                }
+            } catch (error) {
+                setMessage("Something Went Wrong Pls Try Again...");
+                setIsMinting(false);
+                setIsSuccess(false);
+            }
         } else {
             openConnectModal();
         }
     };
+
 
     // Render MintButton component
     return shouldRenderList ? (
@@ -149,8 +177,8 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     borderRadius="24px"
                     boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
                     isDisabled={isButtonDisabled}
-                    // isLoading={isMinting}
-                    // loadingText="Minting"
+                    isLoading={isMinting}
+                    loadingText="Minting..."
                     onClick={handleMintButtonClick}
                 >
                     Mint
@@ -168,8 +196,14 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     <ModalBody>
                         <Center>
                             <VStack spacing={4} mb={4}>
-                                <Image src={isMinting ? loadingGif : imageUrl} alt={isMinting ? "LOGO ANIMATION" : "Your Wanderer"} w={isMinting ? "40%" : "60%"} h="auto" />
+                                <Image src={isMinting ? loadingGif : isSuccess ? imageUrl : failedImage} alt={isMinting ? "LOGO ANIMATION" : isSuccess ? "Your Wanderer" : "Failed Status Image"}
+                                    w={isMinting ? "40%" : isSuccess ? "60%" : "40%"}
+                                    h="auto"
+                                    borderRadius="10%"
+                                    boxShadow="0px 0px 10px rgba(0, 0, 0, 0.5)"
+                                />
                                 <span>{message}{isMinting ? "..." : "."}</span>
+                                {!isMinting && isSuccess ? <Link href={`https://testnets.opensea.io/assets/sepolia/${ContractAddress}/6`} isExternal color={"blue.500"} >View Your Wanderer On OpenSea</Link> : null}
                             </VStack>
                         </Center>
                     </ModalBody>

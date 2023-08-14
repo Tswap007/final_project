@@ -8,7 +8,7 @@ import '@fontsource/amatic-sc';
 import '@fontsource/gemunu-libre';
 
 import { WagmiConfig, createConfig, configureChains } from 'wagmi';
-import { RainbowKitProvider, getDefaultWallets, lightTheme } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import { sepolia } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -53,7 +53,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains} theme={lightTheme({ fontStack: 'system', overlayBlur: 'small' })}>
+          <RainbowKitProvider chains={chains} theme={darkTheme({ fontStack: 'system', overlayBlur: 'small' })} modalSize='compact'>
             <App />
           </RainbowKitProvider>
         </WagmiConfig>
