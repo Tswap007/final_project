@@ -1,11 +1,12 @@
 // Import required modules and components
 import React, { useEffect, useState } from "react";
-import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
+import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
 import { prepareWriteContract, writeContract, waitForTransaction } from "wagmi/actions"
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import loadingGif from "../../assets/loadingGif.gif"
 
 // Initialize NFT Storage client
 const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
@@ -102,7 +103,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return hash;
     }
 
-    const { openConnectModal } = useConnectModal();
+    const { openConnectModal } = useConnectModal();//start modal work from here
     const [message, setMessage] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
     const openModalWithMessage = (message) => {
@@ -145,27 +146,33 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     mb={3}
                     borderRadius="24px"
                     boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)"
-                    isDisabled={isButtonDisabled || isMinting}
-                    isLoading={isMinting}
-                    loadingText="Minting"
+                    isDisabled={isButtonDisabled}
+                    // isLoading={isMinting}
+                    // loadingText="Minting"
                     onClick={handleMintButtonClick}
                 >
                     Mint
                 </Button>
             </Tooltip>
-            <Modal isOpen={isOpen} isCentered>
+            <Modal isOpen={isOpen} isCentered onClose={!isMinting ? closePopUp : null}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Minting Status</ModalHeader>
+                    <ModalHeader>
+                        <Center>
+                            Minting Status
+                        </Center>
+                    </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        {message}
+                        <Center>
+                            <VStack spacing={4} mb={4}>
+                                <Image src={loadingGif} alt="LOGO ANIMATION" w="40%" h="auto" />
+                                <span>{message}{isMinting ? "..." : "."}</span>
+                            </VStack>
+                        </Center>
                     </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="blue" onClick={closePopUp}>Close</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
-        </Center>
+        </Center >
     ) : null;
 }
