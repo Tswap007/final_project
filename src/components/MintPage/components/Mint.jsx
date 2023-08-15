@@ -1,20 +1,21 @@
 // Import required modules and components
 import React, { useEffect, useState } from "react";
-import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack, Link } from "@chakra-ui/react";
+import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack, Link, Icon, useToast } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
-import { prepareWriteContract, writeContract, waitForTransaction } from "wagmi/actions"
+import { prepareWriteContract, writeContract, waitForTransaction, readContract } from "wagmi/actions"
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import loadingGif from "../../assets/loadingGif.gif"
 import failedImage from "../../assets/failed_image.svg"
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 // Initialize NFT Storage client
 const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
 // NFT Smart contract address
-const ContractAddress = '0xf81352C5Cdd5665AB735CEf0947e2EF3230F0bC5';
+const ContractAddress = '0xdb1B7dbFcbcd711f8CEBEAb0bb0e0113AA0a631d';
 
 // Define the MintButton component
 export default function MintButton({ selectedTraits, stageRef }) {
@@ -23,6 +24,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [numberLeft, setNumberLeft] = useState(5);
     const [imageUrl, setImageUrl] = useState("");
+    const [tokenId, setTokenId] = useState(0);
 
     // Update UI when selected traits change
     useEffect(() => {
@@ -43,6 +45,29 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return dataURL;
     }
 
+    async function getTokenId() {
+        const tokenId = await readContract({
+            address: ContractAddress,
+            abi: [
+                {
+                    "inputs": [],
+                    "name": "getTotalItemCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ],
+            functionName: "getTotalItemCount"
+        });
+        setTokenId(tokenId);
+    }
+
     // Function to upload metadata to IPFS and return URI
     async function uploadMetadataToIPFSAndReturnURI() {
         const imageUrl = await getImageUrl();
@@ -50,10 +75,11 @@ export default function MintButton({ selectedTraits, stageRef }) {
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
         setMessage("Collecting Image From Canvas");
         const imageFile = new File([imageBlob], 'wanderer.png', { type: 'image/png' });
-        setMessage("Uploading Image");
+        setMessage("Preparing MetaData");
+        await getTokenId();
         const metadata = await client.store({
-            name: 'Wanderer',
-            description: 'Who says that this isn\'t fun',
+            name: `Wanderer ${tokenId}`,
+            description: 'A Little Wanderer In WonderLand.',
             image: imageFile,
             attributes: [
                 // Define attributes based on selected traits
@@ -100,9 +126,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     // Write mint contract
     async function writeMintContract(request) {
-        setMessage("Awaiting Wallet Confrimation");
+        setMessage("Please, confirm transaction in your wallet.");
         const { hash } = await writeContract(request);
-        setMessage("Confirming Transaction");
+        setMessage("Awaiting transaction status");
         return hash;
     }
 
@@ -115,25 +141,38 @@ export default function MintButton({ selectedTraits, stageRef }) {
             return data;
         }
         else {
-            setMessage("Something Went Wrong Pls Try Again...")
+            setMessage("Something Went Wrong Pls ")
             setIsMinting(false);
             setIsSuccess(false);
         }
     }
 
-    const { openConnectModal } = useConnectModal();//start modal work from here
+    const { openConnectModal } = useConnectModal();
     const [message, setMessage] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
     const openModalWithMessage = (message) => {
         setMessage(message);
         onOpen();
     }
+
+    const toast = useToast();
     const closePopUp = () => {
-        onClose();
-    }
+        if (isMinting) {
+            toast({
+                title: "Please wait",
+                description: " Minting is in progress...",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+            });
+        } else {
+            onClose();
+        }
+    };
 
     const [isMinting, setIsMinting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
     // Handle mint button click
     const handleMintButtonClick = async () => {
         if (isConnected) {
@@ -147,12 +186,12 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     const data = await txStatus(hash);
                     console.log(data);
                 } else {
-                    setMessage("Something Went Wrong Pls Try Again...");
+                    setMessage("Something Went Wrong Pls ");
                     setIsMinting(false);
                     setIsSuccess(false);
                 }
             } catch (error) {
-                setMessage("Something Went Wrong Pls Try Again...");
+                setMessage("Something Went Wrong Pls ");
                 setIsMinting(false);
                 setIsSuccess(false);
             }
@@ -184,7 +223,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     Mint
                 </Button>
             </Tooltip>
-            <Modal isOpen={isOpen} isCentered onClose={!isMinting ? closePopUp : null}>
+            <Modal isOpen={isOpen} isCentered onClose={!isMinting ? closePopUp : closePopUp} blockScrollOnMount={false} closeOnOverlayClick={isMinting ? closePopUp : true}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
@@ -195,15 +234,22 @@ export default function MintButton({ selectedTraits, stageRef }) {
                     <ModalCloseButton />
                     <ModalBody>
                         <Center>
-                            <VStack spacing={4} mb={4}>
+                            <VStack spacing={3} mb={4}>
                                 <Image src={isMinting ? loadingGif : isSuccess ? imageUrl : failedImage} alt={isMinting ? "LOGO ANIMATION" : isSuccess ? "Your Wanderer" : "Failed Status Image"}
                                     w={isMinting ? "40%" : isSuccess ? "60%" : "40%"}
                                     h="auto"
                                     borderRadius="10%"
-                                    boxShadow="0px 0px 10px rgba(0, 0, 0, 0.5)"
+                                    boxShadow={!isMinting && isSuccess ? "6px 5px 10px rgba(0, 0, 0, 0.8)" : null}
                                 />
-                                <span>{message}{isMinting ? "..." : "."}</span>
-                                {!isMinting && isSuccess ? <Link href={`https://testnets.opensea.io/assets/sepolia/${ContractAddress}/6`} isExternal color={"blue.500"} >View Your Wanderer On OpenSea</Link> : null}
+                                <span>{!isMinting && isSuccess ? <Icon as={BsFillCheckCircleFill} color="#5FC95D" boxSize={3} /> : null}{message}{!isMinting && !isSuccess ? <Link onClick={handleMintButtonClick} color={"blue.500"}>Try Again</Link> : null}{isMinting ? "..." : "."}</span>
+                                {!isMinting && isSuccess ?
+                                    <VStack spacing={3}>
+                                        <Link href="/governance">
+                                            <Button background="#5FC95D" borderRadius="24px" boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)">Propose/Vote In Governance</Button>
+                                        </Link>
+                                        <Link href={`https://testnets.opensea.io/assets/sepolia/${ContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
+                                    </VStack>
+                                    : null}
                             </VStack>
                         </Center>
                     </ModalBody>
