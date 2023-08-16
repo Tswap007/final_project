@@ -14,8 +14,8 @@ export function TopBar({ children, textColor, ...rest }) {
             {...rest}
         >
             <Text color={textColor}
-                fontSize={['16px', '20px', '20px']}
-                fontWeight={{ base: 200, md: 300 }}
+                fontSize={['16px', '20px', '22px']}
+                fontWeight={{ base: 200, md: 600 }}
             >
                 {children}
             </Text>
@@ -46,7 +46,7 @@ function ButtonsWithImages({ path, label, onClick, isSelected }) {
                 >
                     <Image src={path} alt={label} width="100%" height="100%" borderRadius="10px" />
                 </Button>
-                <Box mt={1}><Text fontWeight={700}>{label}</Text></Box>
+                <Box mt={1} ><Text fontWeight={700}>{label}</Text></Box>
             </Box>
         </>
     )

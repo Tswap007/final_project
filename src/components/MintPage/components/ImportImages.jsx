@@ -4,15 +4,21 @@ import bg3 from "../attributes/background/background_03.svg";
 import bg4 from "../attributes/background/background_04.svg";
 import bg5 from "../attributes/background/background_05.svg";
 import bg6 from "../attributes/background/background_06.svg";
+import bg7 from "../attributes/background/background_07.svg";
+import bg8 from "../attributes/background/background_08.svg";
+import bg9 from "../attributes/background/background_09.svg";
 
 export function getBackgrounds() {
     return [
-        { path: bg1, label: "Starry Night" },
-        { path: bg2, label: "Background 2" },
-        { path: bg3, label: "Background 3" },
-        { path: bg4, label: "Background 4" },
-        { path: bg5, label: "Background 5" },
-        { path: bg6, label: "Background 6" }
+        { path: bg1, label: "Serene Sky" },
+        { path: bg2, label: "Midnight Sky" },
+        { path: bg3, label: "Radiant Green" },
+        { path: bg4, label: "Forest Teal" },
+        { path: bg5, label: "Gold Rush" },
+        { path: bg6, label: "Sky Blue" },
+        { path: bg7, label: "Rustic Brown" },
+        { path: bg8, label: "Magenta" },
+        { path: bg9, label: "Rusty Red" },
     ];
 }
 
@@ -41,14 +47,18 @@ import face2 from "../attributes/face/face_02.svg";
 import face3 from "../attributes/face/face_03.svg";
 import face4 from "../attributes/face/face_04.svg";
 import face5 from "../attributes/face/face_05.svg";
+import face6 from "../attributes/face/face_06.svg";
+import face7 from "../attributes/face/face_07.svg";
 
 export function getFaces() {
     return [
-        { path: face1, label: "Face 1" },
-        { path: face2, label: "Face 2" },
-        { path: face3, label: "Face 3" },
-        { path: face4, label: "Face 4" },
-        { path: face5, label: "Face 5" },
+        { path: face1, label: "Scared" },
+        { path: face2, label: "Annoyed" },
+        { path: face3, label: "Exicted" },
+        { path: face4, label: "Happy" },
+        { path: face5, label: "Shocked" },
+        { path: face6, label: "Smiling" },
+        { path: face7, label: "Sad" },
     ];
 }
 
@@ -82,11 +92,11 @@ import pet5 from "../attributes/pet/pet_05.svg";
 
 export function getPets() {
     return [
-        { path: pet1, label: "Pet 1" },
-        { path: pet2, label: "Pet 2" },
-        { path: pet3, label: "Pet 3" },
-        { path: pet4, label: "Pet 4" },
-        { path: pet5, label: "Pet 5" },
+        { path: pet1, label: "Nimbus" },
+        { path: pet2, label: "Enigma" },
+        { path: pet3, label: "Sylph" },
+        { path: pet4, label: "Mystique" },
+        { path: pet5, label: "Eldritch" },
     ];
 }
 
