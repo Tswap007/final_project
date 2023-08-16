@@ -1,6 +1,10 @@
 // Import required modules and components
 import React, { useEffect, useState } from "react";
-import { Center, Button, Tooltip, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Image, VStack, Link, Icon, useToast } from "@chakra-ui/react";
+import {
+    Center, Button, Tooltip, useDisclosure, Modal,
+    ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton,
+    Image, VStack, Link, Icon, useToast
+} from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
@@ -15,7 +19,7 @@ const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
 // NFT Smart contract address
-const ContractAddress = '0xdb1B7dbFcbcd711f8CEBEAb0bb0e0113AA0a631d';
+const ContractAddress = '0xD9028628c0DfA69dA67E49592593813c9CCFedf4';
 
 // Define the MintButton component
 export default function MintButton({ selectedTraits, stageRef }) {
@@ -25,6 +29,13 @@ export default function MintButton({ selectedTraits, stageRef }) {
     const [numberLeft, setNumberLeft] = useState(5);
     const [imageUrl, setImageUrl] = useState("");
     const [tokenId, setTokenId] = useState(0);
+    const toast = useToast();
+
+    const [isMinting, setIsMinting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    // Fetch user account information
+    const { isConnected, address } = useAccount();
 
     // Update UI when selected traits change
     useEffect(() => {
@@ -65,7 +76,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
             ],
             functionName: "getTotalItemCount"
         });
-        setTokenId(tokenId);
+        return tokenId;
     }
 
     // Function to upload metadata to IPFS and return URI
@@ -73,10 +84,11 @@ export default function MintButton({ selectedTraits, stageRef }) {
         const imageUrl = await getImageUrl();
         setImageUrl(imageUrl);
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
-        setMessage("Collecting Image From Canvas");
+        setMessage("Collecting Image From Canvas")
         const imageFile = new File([imageBlob], 'wanderer.png', { type: 'image/png' });
-        setMessage("Preparing MetaData");
-        await getTokenId();
+        setMessage("Preparing MetaData")
+        const tokenId = await getTokenId();
+        setTokenId(tokenId);
         const metadata = await client.store({
             name: `Wanderer ${tokenId}`,
             description: 'A Little Wanderer In WonderLand.',
@@ -91,24 +103,91 @@ export default function MintButton({ selectedTraits, stageRef }) {
             ]
         });
 
-        const metaDataURL = metadata.url;
-        setMessage("Upload Succesful")
-        console.log(metaDataURL);
-        return metaDataURL;
+        return metadata;
     }
 
-    // Fetch user account information
-    const { isConnected, address } = useAccount();
+
+    async function checkIfURIExists() {
+        const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
+        const imageUrl = metaDataObject.data.image.href;
+        const doesExist = await readContract({
+            address: ContractAddress,
+            abi: [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "proposedURI",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "itemExists",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ],
+            functionName: "itemExists",
+            args: [imageUrl]
+        })
+        return doesExist;
+    }
+
+    async function mintAndCheckAvailability() {
+        if (!isButtonDisabled && isConnected) {
+            toast({
+                title: "Checking for item availability...",
+                description: "You can proceed with the Mint or wait to confirm if the item is available.",
+                status: "info",
+                duration: 6000,
+                isClosable: true,
+            });
+
+            const doesExist = await checkIfURIExists();
+
+            toast({
+                title: doesExist ? "Item already exists!" : "Item is Available!",
+                description: doesExist
+                    ? "Sorry, but this Wanderer has already been minted"
+                    : "Your Wanderer is unique, proceed with Mint!",
+                status: doesExist ? "error" : "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    }
+
+
+
 
     // Prepare contract write configuration
-    async function prepareContractWrite(metaDataURL) {
+    async function prepareContractWrite(metaDataURL, imageUrl) {
         const config = await prepareWriteContract({
             address: ContractAddress,
             abi: [
                 {
                     "inputs": [
-                        { "internalType": "address", "name": "to", "type": "address" },
-                        { "internalType": "string", "name": "uri", "type": "string" }
+                        {
+                            "internalType": "address",
+                            "name": "to",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "metaDataUri",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "imageUri",
+                            "type": "string"
+                        }
                     ],
                     "name": "safeMint",
                     "outputs": [],
@@ -117,7 +196,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
                 },
             ],
             functionName: 'safeMint',
-            args: [address, metaDataURL],
+            args: [address, metaDataURL, imageUrl],
         });
         setMessage("Preparing Transaction");
 
@@ -126,7 +205,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     // Write mint contract
     async function writeMintContract(request) {
-        setMessage("Please, confirm transaction in your wallet.");
+        setMessage("Please, confirm or reject transaction in your wallet to continue.");
         const { hash } = await writeContract(request);
         setMessage("Awaiting transaction status");
         return hash;
@@ -155,7 +234,6 @@ export default function MintButton({ selectedTraits, stageRef }) {
         onOpen();
     }
 
-    const toast = useToast();
     const closePopUp = () => {
         if (isMinting) {
             toast({
@@ -170,21 +248,21 @@ export default function MintButton({ selectedTraits, stageRef }) {
         }
     };
 
-    const [isMinting, setIsMinting] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
-
     // Handle mint button click
     const handleMintButtonClick = async () => {
         if (isConnected) {
             setIsMinting(true);
+            mintAndCheckAvailability();
             openModalWithMessage();
-            const metaDataURL = await uploadMetadataToIPFSAndReturnURI();
-            const request = await prepareContractWrite(metaDataURL);
+            const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
+            const metaDataURL = metaDataObject.url;
+            const imageUrl = metaDataObject.data.image.href;
+            console.log(imageUrl)
+            const request = await prepareContractWrite(metaDataURL, imageUrl);
             try {
                 const hash = await writeMintContract(request);
                 if (hash) {
                     const data = await txStatus(hash);
-                    console.log(data);
                 } else {
                     setMessage("Something Went Wrong Pls ");
                     setIsMinting(false);

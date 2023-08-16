@@ -1,4 +1,4 @@
-import { Box, Flex, Image, IconButton, Text, Center, AbsoluteCenter, Button } from "@chakra-ui/react";
+import { Box, Flex, Image, IconButton, Text, Center, AbsoluteCenter, Button, Link } from "@chakra-ui/react";
 import { TopBar } from "./TraitsOption";
 import { BsFillTrashFill } from 'react-icons/bs';
 import { motion } from "framer-motion";
@@ -126,6 +126,15 @@ export default function Selected({
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
             <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} />
             <MintButton selectedTraits={selectedTraits} stageRef={stageRef} />
+            <Text
+                position="absolute"
+                bottom={0}
+                left={0}
+                right={0}
+                textAlign="center"
+                paddingY={2}
+                fontWeight={600}
+            >No Goerli ETH ? Do not sweat, you can get some <Link href="https://goerlifaucet.com/" color={"blue.500"} isExternal>here</Link>...</Text>
         </Box>
     )
 
