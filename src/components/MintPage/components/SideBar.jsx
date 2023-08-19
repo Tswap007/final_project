@@ -33,7 +33,7 @@ export function Buttons({ children, onClick, isSelected, ...rest }) {
 
 function SideBarContents({ changeActiveTrait, isSelected }) {
     return (
-        <Stack spacing={0} align="center" p={0} direction={['row', 'row', 'column', 'column']}>
+        <Stack spacing={0} align="center" p={0} direction={{base: 'row', md:  'row', lg: 'column'}}>
             <Buttons onClick={() => changeActiveTrait(backgrounds, "backgrounds")} isSelected={isSelected("backgrounds")}>BackGround</Buttons>
             <Buttons onClick={() => changeActiveTrait(bodies, "bodies")} isSelected={isSelected("bodies")}>Body</Buttons>
             <Buttons onClick={() => changeActiveTrait(heads, "heads")} isSelected={isSelected("heads")}>Head</Buttons>
@@ -58,7 +58,7 @@ export default function SideBar({ setActiveTrait, setActiveTraitName, activeTrai
         <Box
             as="nav"
             position="relative"
-            w={{ base: "100%", md: "15%", lg: "12%" }}
+            w={{ base: "100%", md: "100%", lg: "12%" }}
             bg={'blackAlpha.800'}
             opacity="90%"
             borderWidth="0.5px"

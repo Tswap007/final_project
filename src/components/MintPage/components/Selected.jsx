@@ -126,6 +126,9 @@ export default function Selected({
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
             <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} />
             <MintButton selectedTraits={selectedTraits} stageRef={stageRef} />
+            <Box 
+            paddingY={4}
+            >
             <Text
                 position="absolute"
                 bottom={0}
@@ -135,6 +138,7 @@ export default function Selected({
                 paddingY={2}
                 fontWeight={600}
             >No Goerli ETH ? Don't sweat. Get some <Link href="https://goerlifaucet.com/" color={"blue.500"} isExternal>here</Link>...</Text>
+            </Box>
         </Box>
     )
 

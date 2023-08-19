@@ -54,7 +54,8 @@ function ButtonsWithImages({ path, label, onClick, isSelected }) {
 
 
 const ButtonList = ({ activeTrait, setLayerImage, isSelected, selectedTraitsArray }) => (
-    <Flex flexWrap="wrap" padding={2}>
+    <Flex
+    overflowX={{base:"scroll", md:"scroll", lg:"hidden"}} flexWrap={{base:"nowrap", md: "nowrap", lg:"wrap"}} padding={2}>
         {activeTrait.map((button, index) => (
             <ButtonsWithImages key={index} path={button.path} label={button.label} onClick={() => setLayerImage(button)} isSelected={isSelected(button.path, selectedTraitsArray)} />
         ))}
@@ -97,11 +98,11 @@ export default function TraitsOption({
     return (
         <Box
             as="aside"
-            w={{ base: "100%", md: "30%" }}
+            w={{ base: "100%", md: "100%", lg: "30%" }}
             position="relative"
             bg={"white"}
         >
-            <TopBar bg={"white"} display={{ base: "none", md: "block" }} textColor={"black"}>{activeTraitName}</TopBar>
+            <TopBar bg={"white"} display={{ base: "none", md: "none", lg: "block" }} textColor={"black"}>{activeTraitName}</TopBar>
             <ButtonList activeTrait={activeTrait} setLayerImage={setLayerImageOncanvas} isSelected={isSelected} selectedTraitsArray={selectedTraitsArray} />
         </Box>
     )

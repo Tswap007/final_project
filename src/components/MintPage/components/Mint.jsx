@@ -154,10 +154,10 @@ export default function MintButton({ selectedTraits, stageRef }) {
             toast({
                 title: doesExist ? "Item already exists!" : "Item is Available!",
                 description: doesExist
-                    ? "Sorry, but this Wanderer has already been minted"
+                    ? "Sorry, but this Wanderer has already been minted, your transaction will fail !!"
                     : "Your Wanderer is unique, proceed with Mint!",
                 status: doesExist ? "error" : "success",
-                duration: 3000,
+                duration: 5000,
                 isClosable: true,
             });
         }

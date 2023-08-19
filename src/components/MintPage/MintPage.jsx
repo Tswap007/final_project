@@ -23,9 +23,11 @@ export default function MintPage() {
             bg="#7C89FF"
             backgroundImage={Noise}
             fontFamily="Amatic SC"
-            direction={['column', 'column', 'row', 'row']}
+            direction={['column', 'column', 'column', 'row']}
             h="100%"
             pt={3}
+            // maxH={"600px"}
+            // minH={"600px"}
         >
             <SideBar
                 activeTrait={activeTrait} setActiveTrait={setActiveTrait}
@@ -44,6 +46,7 @@ export default function MintPage() {
                 setActiveHead={setActiveHead}
                 setActivePet={setActivePet}
             />
+            <Flex direction={{base: "column", md: "row-reverse", lg: "row"}} width={{base: "100%", md:"100%", lg:"60%"}}>
             <Canvas
                 activeBackground={activeBackground}
                 activeBody={activeBody}
@@ -70,6 +73,7 @@ export default function MintPage() {
                 setActivePet={setActivePet}
                 stageRef={stageRef}
             />
+            </Flex>
         </Flex>
     );
 

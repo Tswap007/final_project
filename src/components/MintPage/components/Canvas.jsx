@@ -21,10 +21,9 @@ const Canvas = ({
     const [bodyImage] = useImage(activeBody.path)
     const [petImage] = useImage(activePet.path)
 
-    const stageHeight = useBreakpointValue({ base: 350, md: 380, lg: 450 });
-    const stageWidth = useBreakpointValue({ base: 350, md: 380, lg: 450 });
-
-
+    const stageHeight = useBreakpointValue({ base: 350, md: 450, lg: 450 });
+    const stageWidth = useBreakpointValue({ base: 350, md: 450, lg: 450 });
+    const flexWidth = useBreakpointValue({base: "100%", md: 450, lg: 450})
 
     function getRandomElementFromArray(array) {
         const randomIndex = Math.floor(Math.random() * array.length);
@@ -71,9 +70,9 @@ const Canvas = ({
 
 
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;
-
+    // changing the width below to 100% solve the issue of the canvas not being centered for small screens but it then strecthes it on bigger screens so I think I wil have to but the canvas in a seperate box and then use that to 100 %
     return (
-        <Flex bg={'blackAlpha.800'} width={stageWidth} height="auto" direction="column">
+        <Flex bg={'blackAlpha.800'} width={flexWidth} height="auto" direction="column"> 
             <Box
                 w="100%"
                 bg={'white'}
@@ -81,7 +80,7 @@ const Canvas = ({
                 borderLeft={0}
                 borderColor="gray.400"
                 p={3}
-                display={{ base: "none", md: "block" }}
+                display="block"
                 justifyContent='space-between'
                 alignItems="center"
             >
@@ -127,6 +126,7 @@ const Canvas = ({
                     </Tooltip>
                 </Flex>
             </Box>
+            <Box w={flexWidth}>
             <Box
                 width="100%"
                 height="100%"
@@ -156,6 +156,7 @@ const Canvas = ({
                         <Image image={petImage} width={stageWidth} height={stageHeight} />
                     </Layer>
                 </Stage>
+            </Box>
             </Box>
         </Flex>
     )
