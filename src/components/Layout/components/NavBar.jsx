@@ -1,4 +1,4 @@
-import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack } from "@chakra-ui/react";
+import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack, Center } from "@chakra-ui/react";
 import logo from "../../assets/LOGO_full.svg";
 import Noise from '../../../bg/noise.svg';
 import cloud2 from "../../assets/s2Cloud.svg";
@@ -46,9 +46,9 @@ function MenuLinks({ isOpen }) {
             <Stack
                 spacing={8}
                 align="center"
-                justify={['center', 'space-between', 'flex-end', 'flex-end']}
-                direction={['column', 'row', 'row', 'row']}
-                pt={[4, 4, 0, 0]}
+                justify={{base:'center', md:'center'}}
+                direction={{base: "column", md: "row"}}
+                pt={4}
             >
                 <MenuItem to="/">Home</MenuItem>
                 <MenuItem to="/mint">Compose And Mint</MenuItem>
@@ -141,13 +141,16 @@ export default function NavBar(props) {
         <>
             <NavBarContainer {...props}>
                 <Logo width={["100px", "120px"]} height='auto' />
-                <MenuLinks isOpen={isOpen} />
                 <MenuLinksBox background="#FFF" width="50%">
                     <MenuItem to="/">Home</MenuItem>
                     <MenuItem to="/mint">Compose and Mint</MenuItem>
                     <MenuItem to="/governance">Governance</MenuItem>
                     <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
                 </MenuLinksBox>
+                <Box 
+                zIndex={2}
+                >
+                <MenuLinks isOpen={isOpen} />
                 <Box
                     zIndex={2}
                     height="35px"
@@ -157,6 +160,7 @@ export default function NavBar(props) {
                         accountStatus={{ smallScreen: 'avatar', largeScreen: 'full', }}
                         chainStatus="icon"
                     />
+                </Box>
                 </Box>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <Clouds src={cloud2} top={4} right={4} width={["40%", "15%"]} />

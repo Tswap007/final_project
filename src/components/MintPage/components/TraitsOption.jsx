@@ -1,5 +1,4 @@
-import { Box, Text, Image, Flex, Button } from "@chakra-ui/react";
-
+import { Box, Text, Image, Flex, Button} from "@chakra-ui/react";
 
 export function TopBar({ children, textColor, ...rest }) {
     return (
@@ -52,10 +51,13 @@ function ButtonsWithImages({ path, label, onClick, isSelected }) {
     )
 }
 
-
+// start here and add tht arrows to specify that there are more options
 const ButtonList = ({ activeTrait, setLayerImage, isSelected, selectedTraitsArray }) => (
     <Flex
-    overflowX={{base:"scroll", md:"scroll", lg:"hidden"}} flexWrap={{base:"nowrap", md: "nowrap", lg:"wrap"}} padding={2}>
+    overflowX={{base:"scroll", md:"scroll", lg:"hidden"}}
+     flexWrap={{base:"nowrap", md: "nowrap", lg:"wrap"}}
+      padding={2}
+      >
         {activeTrait.map((button, index) => (
             <ButtonsWithImages key={index} path={button.path} label={button.label} onClick={() => setLayerImage(button)} isSelected={isSelected(button.path, selectedTraitsArray)} />
         ))}

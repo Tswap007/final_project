@@ -67,20 +67,20 @@ function SelectedTraitsList({ selectedTraits, onClick }) {
 
 function EmptyPageInfo() {
     return (
-        <Box align="center" w="100%" fontSize="25px" fontWeight={700}>
+        <Box align="center" w="100%" fontSize="25px" fontWeight={700} mb={10}>
             <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: [-5, 0, -5] }}
                 transition={{ repeat: Infinity, duration: 1 }}
             >
-                <Text>NOTHING YET!</Text>
+                <Text>Your Wanderer Awaits!</Text>
             </motion.div>
             <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: [5, 0, 5] }}
                 transition={{ repeat: Infinity, duration: 1 }}
             >
-                <Text whiteSpace="nowrap">SELECT ANY IMAGE TO BEGIN!</Text>
+                <Text whiteSpace="nowrap">Select an Item to Begin!!</Text>
             </motion.div>
         </Box>
     );
@@ -122,6 +122,7 @@ export default function Selected({
             position="relative"
             flex={1}
             bg={"white"}
+            minH={40}
         >
             <TopBar flex={1} display={{ base: "none", md: "block" }} bg={"white"} textColor={"black"}>Selected Traits</TopBar>
             <SelectedTraitsList selectedTraits={selectedTraits} onClick={clearSelection} />
