@@ -134,7 +134,7 @@ export default function Selected({
                 textAlign="center"
                 paddingY={2}
                 fontWeight={600}
-            >No Goerli ETH ? Do not sweat, you can get some <Link href="https://goerlifaucet.com/" color={"blue.500"} isExternal>here</Link>...</Text>
+            >No Goerli ETH ? Don't sweat. Get some <Link href="https://goerlifaucet.com/" color={"blue.500"} isExternal>here</Link>...</Text>
         </Box>
     )
 
