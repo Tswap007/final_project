@@ -20,7 +20,7 @@ export default function MintPage() {
 
     return (
         <Flex
-            bg="#7C89FF"
+            bg="#7149C6"
             backgroundImage={Noise}
             fontFamily="Amatic SC"
             direction={['column', 'column', 'column', 'row']}

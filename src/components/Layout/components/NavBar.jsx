@@ -100,7 +100,7 @@ const NavBarContainer = ({ children, ...props }) => {
             w="100%"
             maxHeight={["auto", "80px"]}
             p={3}
-            bg="#7C89FF"
+            bg="#7149C6"
             backgroundImage={Noise}
             color={["white", "white", "White", "black"]}
             {...props}

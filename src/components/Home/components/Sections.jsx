@@ -66,6 +66,7 @@ function SectionDetails({ header, description, buttonText, to = "/", isExternal 
                 letterSpacing={{ base: "1.5px", md: "2.5px" }}
                 textTransform="lowercase"
                 fontWeight={700}
+                // color={"blackAlpha.800"}
                 lineHeight={1.5}
                 textAlign={["center", "center", "left", "left"]}
                 pl={{ lg: 10 }}

@@ -18,7 +18,7 @@ export default function Home() {
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'COMPOSE AND MINT',
         to: "/mint",
-        bg: "#7C89FF",
+        bg: "#7149C6",
         left: "43%",
         isExternal: false
     };
@@ -30,7 +30,7 @@ export default function Home() {
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'Vote Or Propose',
         to: "/governance",
-        bg: "#7C89FF", // previous F3EAC6
+        bg: "#7149C6", // previous F3EAC6
         left: "39%",
         isExternal: false
     };
@@ -42,7 +42,7 @@ export default function Home() {
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fun',
         buttonText: 'EXPLORE COLLECTION',
         to: "https://opensea.io",
-        bg: "#7C89FF", // previous 70EC6E
+        bg: "#7149C6", // previous 70EC6E
         left: "39%",
         isExternal: true
     };
