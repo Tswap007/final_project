@@ -85,19 +85,13 @@ const Canvas = ({
                 alignItems="center"
             >
                 <Flex justifyContent={'flex-end'}>
-                    <Tooltip hasArrow placement='top' label="Clear Canvas">
+                    <Tooltip hasArrow placement='top' label="Download">
                         <IconButton
-                            aria-label="Delete All"
-                            icon={<BsFillTrashFill />}
-                            color="red"
+                            aria-label="Download"
+                            icon={<BsDownload />}
+                            color="black"
                             variant="ghost"
-                            onClick={() => clearAll({
-                                setActiveBackground,
-                                setActiveBody,
-                                setActiveFace,
-                                setActiveHead,
-                                setActivePet
-                            })}
+                            onClick={handleSaveImage}
                         />
                     </Tooltip>
                     <Tooltip hasArrow placement='top' label="Shuffle">
@@ -115,13 +109,19 @@ const Canvas = ({
                             })}
                         />
                     </Tooltip>
-                    <Tooltip hasArrow placement='top' label="Download">
+                    <Tooltip hasArrow placement='top' label="Clear Canvas">
                         <IconButton
-                            aria-label="Download"
-                            icon={<BsDownload />}
-                            color="black"
+                            aria-label="Delete All"
+                            icon={<BsFillTrashFill />}
+                            color="red"
                             variant="ghost"
-                            onClick={handleSaveImage}
+                            onClick={() => clearAll({
+                                setActiveBackground,
+                                setActiveBody,
+                                setActiveFace,
+                                setActiveHead,
+                                setActivePet
+                            })}
                         />
                     </Tooltip>
                 </Flex>
