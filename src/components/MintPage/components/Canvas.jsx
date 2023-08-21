@@ -84,7 +84,7 @@ const Canvas = ({
                 justifyContent='space-between'
                 alignItems="center"
             >
-                <Flex>
+                <Flex justifyContent={'flex-end'}>
                     <Tooltip hasArrow placement='top' label="Clear Canvas">
                         <IconButton
                             aria-label="Delete All"
