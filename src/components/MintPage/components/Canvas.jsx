@@ -1,4 +1,4 @@
-import { Box, Flex, useBreakpointValue, IconButton, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue, IconButton, Tooltip, Select } from '@chakra-ui/react';
 import { Stage, Layer, Image } from 'react-konva';
 import { BsShuffle, BsFillTrashFill, BsDownload } from 'react-icons/bs';
 import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
@@ -73,17 +73,30 @@ const Canvas = ({
     // changing the width below to 100% solve the issue of the canvas not being centered for small screens but it then strecthes it on bigger screens so I think I wil have to but the canvas in a seperate box and then use that to 100 %
     return (
         <Flex bg={'blackAlpha.800'} width={flexWidth} height="auto" direction="column"> 
-            <Box
+            <Flex
                 w="100%"
                 bg={'white'}
                 borderWidth="0.5px"
                 borderLeft={0}
                 borderColor="gray.400"
                 p={3}
-                display="block"
                 justifyContent='space-between'
                 alignItems="center"
             >
+                <Box w={"50%"}>
+                <Select
+                    placeholder="Select Network"
+                    // value={selectedOption}
+                    // onChange={handleOptionChange}
+                    w={"100%"}
+                    fontWeight={700}
+                    size={'lg'}
+                >
+                    <option value="option1">Sepolia</option>
+                    <option value="option2">Goerli</option>
+                    <option value="option3">Polygon(Mumbai)</option>
+                </Select>
+                </Box>
                 <Flex justifyContent={'flex-end'}>
                     <Tooltip hasArrow placement='top' label="Download">
                         <IconButton
@@ -125,7 +138,7 @@ const Canvas = ({
                         />
                     </Tooltip>
                 </Flex>
-            </Box>
+            </Flex>
             <Box w={flexWidth}>
             <Box
                 width="100%"
