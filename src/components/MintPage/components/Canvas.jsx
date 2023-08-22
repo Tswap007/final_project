@@ -93,7 +93,7 @@ const Canvas = ({
                     size={'lg'}
                 >
                     <option value="option1">Sepolia</option>
-                    <option value="option2">Goerli</option>
+                    <option value="option2">Arbitrum(Goerli)</option>
                     <option value="option3">Polygon(Mumbai)</option>
                 </Select>
                 </Box>
