@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { checkIfAnyTraitSelected } from "./Selected";
 import { NFTStorage, File } from "nft.storage";
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { prepareWriteContract, writeContract, waitForTransaction, readContract } from "wagmi/actions"
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import loadingGif from "../../assets/loadingGif.gif"
@@ -19,7 +19,6 @@ const NFT_STORAGE_TOKEN = import.meta.env.VITE_NFTSTORAGE_API_KEY;
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
 // NFT Smart contract address
-const ContractAddress = '0xD9028628c0DfA69dA67E49592593813c9CCFedf4';
 
 // Define the MintButton component
 export default function MintButton({ selectedTraits, stageRef }) {
@@ -33,9 +32,37 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     const [isMinting, setIsMinting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-
+    
     // Fetch user account information
     const { isConnected, address } = useAccount();
+    
+    const {chain} = useNetwork();
+
+    const [currentChain, setCurrentChain] = useState("");
+    const [currentContractAddress, setCurrentContractAddress] = useState("")
+    
+    
+    useEffect(() => {
+        function getContractAddress() {
+            const sepoliaAddress = '0xD9028628c0DfA69dA67E49592593813c9CCFedf4';
+            const arbGoerliAddress = '0xb0FB69894c920f5cccf03BcE2345E51deD58143f';
+            const mumbaiAddress = '0xcefecbB1c4a4A47cD1F523aa12C6580f96Ba355F';
+    
+            if (chain.name === 'Sepolia') {
+                setCurrentChain('sepolia');
+                setCurrentContractAddress(sepoliaAddress);
+            } else if (chain.name === 'Arbitrum Goerli') {
+                setCurrentChain('arbitrum-goerli');
+                setCurrentContractAddress(arbGoerliAddress);
+            } else if (chain.name === 'Polygon Mumbai') {
+                setCurrentChain('mumbai');
+                setCurrentContractAddress(mumbaiAddress);
+            }
+        }
+    
+        // Call the function when the dependency (chain.name) changes
+        getContractAddress();
+    }, [chain.name]); // chain.name is the dependency   
 
     // Update UI when selected traits change
     useEffect(() => {
@@ -58,7 +85,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     async function getTokenId() {
         const tokenId = await readContract({
-            address: ContractAddress,
+            address: currentContractAddress,
             abi: [
                 {
                     "inputs": [],
@@ -111,7 +138,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
         const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
         const imageUrl = metaDataObject.data.image.href;
         const doesExist = await readContract({
-            address: ContractAddress,
+            address: currentContractAddress,
             abi: [
                 {
                     "inputs": [
@@ -169,7 +196,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
     // Prepare contract write configuration
     async function prepareContractWrite(metaDataURL, imageUrl) {
         const config = await prepareWriteContract({
-            address: ContractAddress,
+            address: currentContractAddress,
             abi: [
                 {
                     "inputs": [
@@ -325,7 +352,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
                                         <Link href="/governance">
                                             <Button background="#5FC95D" borderRadius="24px" boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)">Propose/Vote In Governance</Button>
                                         </Link>
-                                        <Link href={`https://testnets.opensea.io/assets/sepolia/${ContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
+                                        <Link href={`https://testnets.opensea.io/assets/${currentChain}/${currentContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
                                     </VStack>
                                     : null}
                             </VStack>
