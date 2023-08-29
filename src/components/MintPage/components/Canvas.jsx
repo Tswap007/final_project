@@ -1,7 +1,10 @@
-import { Box, Flex, useBreakpointValue, IconButton, Tooltip, Select } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue, IconButton, Tooltip, Button, useToast, Text } from '@chakra-ui/react';
 import { Stage, Layer, Image } from 'react-konva';
 import { BsShuffle, BsFillTrashFill, BsDownload } from 'react-icons/bs';
+import {RiArrowDropDownLine} from 'react-icons/ri';
 import { getBackgrounds, getBodies, getFaces, getHeads, getPets } from "./ImportImages";
+import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount, useNetwork } from 'wagmi';
 import useImage from 'use-image';
 
 
@@ -20,6 +23,16 @@ const Canvas = ({
     const [faceImage] = useImage(activeFace.path)
     const [bodyImage] = useImage(activeBody.path)
     const [petImage] = useImage(activePet.path)
+
+    const { openChainModal } = useChainModal();
+
+    const { isConnected } = useAccount();
+
+    const {chain} = useNetwork()
+
+    const { openConnectModal } = useConnectModal();
+
+    const toast = useToast();
 
     const stageHeight = useBreakpointValue({ base: 350, md: 450, lg: 450 });
     const stageWidth = useBreakpointValue({ base: 350, md: 450, lg: 450 });
@@ -67,6 +80,21 @@ const Canvas = ({
         }
     };
 
+    const changeNetwork = () => {
+        if(isConnected){
+            openChainModal();
+        }
+        else{
+            openConnectModal(); 
+            toast({
+                title: "Wallet Connection required",
+                status: "info",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    }
+
 
 
     const checkerboardPattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill-opacity='.25'%3E%3Crect x='15' width='15' height='15' fill='%23FFFFFF' /%3E%3Crect y='15' width='15' height='15' fill='%23FFFFFF' /%3E%3C/svg%3E")`;
@@ -83,19 +111,23 @@ const Canvas = ({
                 justifyContent='space-between'
                 alignItems="center"
             >
-                <Box w={"50%"}>
-                <Select
-                    placeholder="Select Network"
-                    // value={selectedOption}
-                    // onChange={handleOptionChange}
-                    w={"100%"}
+                <Box w="70%" display="flex" alignItems="center">
+                    <Text
+                    fontSize={"20px"}
                     fontWeight={700}
-                    size={'lg'}
-                >
-                    <option value="option1">Sepolia</option>
-                    <option value="option2">Arbitrum(Goerli)</option>
-                    <option value="option3">Polygon(Mumbai)</option>
-                </Select>
+                    // marginRight="10px"
+                    display={'flex'}
+                    >
+                    Network :  <Text color="#7149C6" ml={1}>{chain.name}</Text>
+                    </Text>
+                    <Tooltip hasArrow placement='top' label="Switch Networks">
+                       <IconButton
+                       aria-label='switch networks'
+                       icon={<RiArrowDropDownLine />}
+                       variant="ghost"
+                       onClick={changeNetwork}
+                       />
+                    </Tooltip>
                 </Box>
                 <Flex justifyContent={'flex-end'}>
                     <Tooltip hasArrow placement='top' label="Download">

@@ -10,17 +10,19 @@ import '@fontsource/gemunu-libre';
 import { WagmiConfig, createConfig, configureChains } from 'wagmi';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
-import { sepolia } from 'wagmi/chains';
+import { sepolia, arbitrumGoerli, polygonMumbai} from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { infuraProvider } from '@wagmi/core/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 
 const infuraApiKey = import.meta.env.VITE_INFURA_API_KEY;
 const alchemyApiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
+const arbitrumGoerliApi = import.meta.env.VITE_ARBITRUM_GOERLI_API_KEY;
+const mumbaiApi = import.meta.env.VITE_MUMBAI_API_KEY;
 
 
 const { chains, publicClient } = configureChains(
-  [sepolia],
+  [sepolia, arbitrumGoerli, polygonMumbai],
   [
     alchemyProvider({ apiKey: alchemyApiKey }),
     infuraProvider({ apiKey: infuraApiKey }),
