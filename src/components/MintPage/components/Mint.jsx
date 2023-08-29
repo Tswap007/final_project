@@ -232,9 +232,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     // Write mint contract
     async function writeMintContract(request) {
-        setMessage("Please, confirm or reject transaction in your wallet to continue.");
+        setMessage("Waiting for wallet confirmation.");
         const { hash } = await writeContract(request);
-        setMessage("Awaiting transaction status");
+        setMessage("Transaction confirmed, awaiting status");
         return hash;
     }
 
@@ -277,10 +277,11 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     // Handle mint button click
     const handleMintButtonClick = async () => {
+        //tyr catching errors here and ending the function
         if (isConnected) {
             setIsMinting(true);
-            mintAndCheckAvailability();
             openModalWithMessage();
+            await mintAndCheckAvailability();
             const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
             const metaDataURL = metaDataObject.url;
             const imageUrl = metaDataObject.data.image.href;
@@ -349,9 +350,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
                                 <span>{!isMinting && isSuccess ? <Icon as={BsFillCheckCircleFill} color="#5FC95D" boxSize={3} /> : null}{message}{!isMinting && !isSuccess ? <Link onClick={handleMintButtonClick} color={"blue.500"}>Try Again</Link> : null}{isMinting ? "..." : "."}</span>
                                 {!isMinting && isSuccess ?
                                     <VStack spacing={3}>
-                                        <Link href="/governance">
+                                        {/* <Link href="/governance">
                                             <Button background="#5FC95D" borderRadius="24px" boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)">Propose/Vote In Governance</Button>
-                                        </Link>
+                                        </Link> */}
                                         <Link href={`https://testnets.opensea.io/assets/${currentChain}/${currentContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
                                     </VStack>
                                     : null}
