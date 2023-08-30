@@ -1,4 +1,4 @@
-import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack, Center } from "@chakra-ui/react";
+import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerOverlay, useDisclosure } from "@chakra-ui/react";
 import logo from "../../assets/LOGO_full.svg";
 import Noise from '../../../bg/noise.svg';
 import cloud2 from "../../assets/s2Cloud.svg";
@@ -29,33 +29,32 @@ function MenuToggle({ toggle, isOpen }) {
 function MenuItem({ children, to = "/", ...rest }) {
     return (
         <Link display="block" href={to} {...rest}>
-            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']}>{children}</Text>
+            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} color={"white"}>{children}</Text>
         </Link>
     );
 }
 
 // MenuLinks component
 
-function MenuLinks({ isOpen }) {
+function MenuLinks({ isOpen, onClose }) {
     return (
-        <Box
-            display={{ base: isOpen ? 'block' : 'none', md: isOpen ? 'block' : 'none', lg: "none" }}
-            flexBasis={{ base: '100%', md: 'auto' }}
-            zIndex={1}
-        >
-            <Stack
-                spacing={8}
-                align="center"
-                justify={{base:'center', md:'center'}}
-                direction={{base: "column", md: "row"}}
-                pt={4}
-            >
-                <MenuItem to="/">Home</MenuItem>
-                <MenuItem to="/mint">Compose And Mint</MenuItem>
-                <MenuItem to="/governance">Governance</MenuItem>
-                <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
-            </Stack>
-        </Box>
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={{base: "xs", md: "sm"}}>
+            <DrawerOverlay />
+            <DrawerContent bg="#7149C6" backgroundImage={Noise}>
+                <DrawerCloseButton />
+                <DrawerBody>
+                    <Stack spacing={8} align="center" justify="center" direction="column" pt={4} mt={10}>
+                        <MenuItem to="/">Home</MenuItem>
+                        <MenuItem to="/mint">Compose And Mint</MenuItem>
+                        <MenuItem to="/governance">Governance</MenuItem>
+                        <MenuItem to="https://opensea.io" isExternal>
+                            Explore
+                        </MenuItem>
+                       <ConnectButton />
+                    </Stack>
+                </DrawerBody>
+            </DrawerContent>
+        </Drawer>
     );
 }
 
@@ -150,7 +149,7 @@ export default function NavBar(props) {
                 <Box 
                 zIndex={2}
                 >
-                <MenuLinks isOpen={isOpen} />
+                <MenuLinks isOpen={isOpen} onClose={() => setIsOpen(false)}/>
                 <Box
                     zIndex={2}
                     height="35px"

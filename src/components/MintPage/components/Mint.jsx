@@ -68,7 +68,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
         if(chain !== undefined) {
             getContractAddress();
         }
-    }, [chain]); //problem with this as it cannot be undefined at the first mount.  
+    }, [chain]);  
 
     // Update UI when selected traits change
     useEffect(() => {
