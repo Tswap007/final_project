@@ -57,12 +57,18 @@ export default function MintButton({ selectedTraits, stageRef }) {
             } else if (chain.name === 'Polygon Mumbai') {
                 setCurrentChain('mumbai');
                 setCurrentContractAddress(mumbaiAddress);
+            } else {
+                setCurrentChain("wrong network or no wallet connection yet");
+                setCurrentContractAddress("");
             }
+
         }
     
         // Call the function when the dependency (chain.name) changes
-        getContractAddress();
-    }, [chain.name]); // chain.name is the dependency   
+        if(chain !== undefined) {
+            getContractAddress();
+        }
+    }, [chain]); //problem with this as it cannot be undefined at the first mount.  
 
     // Update UI when selected traits change
     useEffect(() => {

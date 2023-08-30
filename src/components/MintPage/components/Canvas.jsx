@@ -118,7 +118,8 @@ const Canvas = ({
                     // marginRight="10px"
                     display={'flex'}
                     >
-                    Network :  <Text color="#7149C6" ml={1}>{chain.name}</Text>
+                        {/* problem down here too with the chain.name being undefined on first mount */}
+                    Network :  <Text color="#7149C6" ml={1}>{chain ?  chain.name : "Select Network"}</Text>
                     </Text>
                     <Tooltip hasArrow placement='top' label="Switch Networks">
                        <IconButton
