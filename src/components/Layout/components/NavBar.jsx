@@ -29,7 +29,7 @@ function MenuToggle({ toggle, isOpen }) {
 function MenuItem({ children, to = "/", ...rest }) {
     return (
         <Link display="block" href={to} {...rest}>
-            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} color={"white"}>{children}</Text>
+            <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} color={{base:"white", md:"white", lg:"black"}}>{children}</Text>
         </Link>
     );
 }
