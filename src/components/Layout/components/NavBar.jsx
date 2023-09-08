@@ -156,7 +156,7 @@ export default function NavBar(props) {
                     mt={4}
                 >
                     <ConnectButton
-                        accountStatus={{ smallScreen: 'avatar', largeScreen: 'full', }}
+                        accountStatus={{ smallScreen: 'avatar', largeScreen: 'avatar', }}
                         chainStatus="icon"
                     />
                 </Box>
