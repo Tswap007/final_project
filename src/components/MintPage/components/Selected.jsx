@@ -1,7 +1,9 @@
-import { Box, Flex, Image, IconButton, Text, Center, AbsoluteCenter, Button, Link } from "@chakra-ui/react";
+import { Box, Flex, Image, IconButton, Text, AbsoluteCenter, Link } from "@chakra-ui/react";
 import { TopBar } from "./TraitsOption";
 import { BsFillTrashFill } from 'react-icons/bs';
 import { motion } from "framer-motion";
+import { useNetwork, useAccount } from "wagmi";
+import { useState, useEffect } from "react";
 import MintButton from "./Mint";
 
 function SelectedTraits({ path, label, onClick, setter }) {
@@ -116,6 +118,33 @@ export default function Selected({
         setter({});
     }
 
+    const {chain} = useNetwork();
+    const {isConnected} = useAccount();
+    const [nativeCurrency, setNativeCurrency] = useState({});
+    const [currentLink, setCurrentLink] = useState("");
+
+    useEffect(() => {
+        function getFaucetLink() {
+            const sepoliaLink = 'https://sepoliafaucet.com/';
+            const arbGoerlLink = 'https://faucet.quicknode.com/arbitrum/goerli';
+            const mumbaiLink = 'https://mumbaifaucet.com/';
+            setNativeCurrency(chain.nativeCurrency);
+
+            if (chain.name === 'Sepolia') {
+                setCurrentLink(sepoliaLink);
+            } else if (chain.name === 'Arbitrum Goerli') {
+                setCurrentLink(arbGoerlLink);
+            } else if (chain.name === 'Polygon Mumbai') {
+                setCurrentLink(mumbaiLink);
+            }
+        }
+    
+        // Call the function when the dependency (chain.name) changes
+        if(chain !== undefined) {
+            getFaucetLink();
+        }
+    }, [chain]);
+
     return (
         <Box
             as="aside"
@@ -130,7 +159,8 @@ export default function Selected({
             <Box 
             paddingY={4}
             >
-            <Text
+            { isConnected ?
+             <Text
                 position="absolute"
                 bottom={0}
                 left={0}
@@ -138,7 +168,9 @@ export default function Selected({
                 textAlign="center"
                 paddingY={2}
                 fontWeight={600}
-            >No Goerli ETH ? Don't sweat. Get some <Link href="https://goerlifaucet.com/" color={"blue.500"} isExternal>here</Link>...</Text>
+            >
+            No {nativeCurrency.name} ? Don't sweat. Get some <Link href={currentLink} color={"blue.500"} isExternal>here</Link>...
+            </Text> : null }
             </Box>
         </Box>
     )
