@@ -139,7 +139,6 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return metadata;
     }
 
-    const [itemDoesExist, setDoesExist] = useState(false);
 
     async function checkIfURIExists() {
         const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
@@ -170,9 +169,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
             functionName: "itemExists",
             args: [imageUrl]
         })
-        console.log(doesExist)
         return doesExist;
     }
+
 
     async function mintAndCheckAvailability() {
         if (!isButtonDisabled && isConnected) {
@@ -185,10 +184,9 @@ export default function MintButton({ selectedTraits, stageRef }) {
             });
             
             const doesExist = await checkIfURIExists();
-            setDoesExist(doesExist);
 
             if(doesExist){
-                setMessage("Something Went Wrong Pls ")
+                setMessage("This wanderer exists on this chain already, pls build another or switch network.")
                 setIsMinting(false);
                 setIsSuccess(false);
             }
@@ -202,9 +200,10 @@ export default function MintButton({ selectedTraits, stageRef }) {
                 duration: 5000,
                 isClosable: true,
             });
+
+            return(doesExist);
         }
     }
-
 
     // Prepare contract write configuration
     async function prepareContractWrite(metaDataURL, imageUrl) {
@@ -289,13 +288,17 @@ export default function MintButton({ selectedTraits, stageRef }) {
     };
 
     // Handle mint button click
+    const [itemDoesExist, setItemDoesExist] = useState(false);
+
     const handleMintButtonClick = async () => {
-        //tyr catching errors here and ending the function
         if (isConnected) {
             setIsMinting(true);
             openModalWithMessage();
-            await mintAndCheckAvailability();
-            console.log(itemDoesExist);
+            const doesExist = await mintAndCheckAvailability();
+            setItemDoesExist(doesExist);
+            if(doesExist){
+                return;
+            }
             const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
             const metaDataURL = metaDataObject.url;
             const imageUrl = metaDataObject.data.image.href;
@@ -303,7 +306,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
             try {
                 const hash = await writeMintContract(request);
                 if (hash) {
-                    const data = await txStatus(hash);
+                    await txStatus(hash);
                 } else {
                     setMessage("Something Went Wrong Pls ");
                     setIsMinting(false);
@@ -360,7 +363,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
                                     borderRadius="10%"
                                     boxShadow={!isMinting && isSuccess ? "6px 5px 10px rgba(0, 0, 0, 0.8)" : null}
                                 />
-                                <span>{!isMinting && isSuccess ? <Icon as={BsFillCheckCircleFill} color="#5FC95D" boxSize={3} /> : null}{message}{!isMinting && !isSuccess ? <Link onClick={handleMintButtonClick} color={"blue.500"}>Try Again</Link> : null}{isMinting ? "..." : "."}</span>
+                                <span>{!isMinting && isSuccess ? <Icon as={BsFillCheckCircleFill} color="#5FC95D" boxSize={3} /> : null}{message}{!isMinting && !isSuccess && !itemDoesExist ? <Link onClick={handleMintButtonClick} color={"blue.500"}>Try Again</Link> : null}{isMinting ? "..." : "."}</span>
                                 {!isMinting && isSuccess ?
                                     <VStack spacing={3}>
                                         <Link href={`https://testnets.opensea.io/assets/${currentChain}/${currentContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
