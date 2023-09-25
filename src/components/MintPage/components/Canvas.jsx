@@ -1,4 +1,4 @@
-import { Box, Flex, useBreakpointValue, IconButton, Tooltip, Button, useToast, Text } from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue, IconButton, Tooltip, useToast, Text } from '@chakra-ui/react';
 import { Stage, Layer, Image } from 'react-konva';
 import { BsShuffle, BsFillTrashFill, BsDownload } from 'react-icons/bs';
 import {RiArrowDropDownLine} from 'react-icons/ri';

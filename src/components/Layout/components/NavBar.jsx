@@ -1,11 +1,12 @@
-import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, IconButton, Image, Link, Text, Flex, Stack, HStack, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerOverlay, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import logo from "../../assets/LOGO_full.svg";
 import Noise from '../../../bg/noise.svg';
 import cloud2 from "../../assets/s2Cloud.svg";
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 // Logo component
 function Logo(props) {
@@ -25,8 +26,8 @@ function MenuToggle({ toggle, isOpen }) {
     );
 }
 
-// MenuItem component
-function MenuItem({ children, to = "/", ...rest }) {
+// MenuItems component
+function MenuItems({ children, to = "/", ...rest }) {
     return (
         <Link display="block" href={to} {...rest}>
             <Text fontFamily="Amatic SC" fontSize={['16px', '20px', '24px']} color={{base:"white", md:"white", lg:"black"}}>{children}</Text>
@@ -44,12 +45,18 @@ function MenuLinks({ isOpen, onClose }) {
                 <DrawerCloseButton />
                 <DrawerBody>
                     <Stack spacing={8} align="center" justify="center" direction="column" pt={4} mt={10}>
-                        <MenuItem to="/">Home</MenuItem>
-                        <MenuItem to="/mint">Compose And Mint</MenuItem>
-                        <MenuItem to="/governance">Governance</MenuItem>
-                        <MenuItem to="https://opensea.io" isExternal>
-                            Explore
-                        </MenuItem>
+                        <MenuItems to="/">Home</MenuItems>
+                        <MenuItems to="/mint">Compose And Mint</MenuItems>
+                        <Box fontFamily="Amatic SC" >
+                            <Menu>
+                                <MenuButton fontSize={['16px', '20px', '24px']} color={{base:"white", md:"white", lg:"black"}}>Explore Collection <ChevronDownIcon/></MenuButton>
+                                    <MenuList>
+                                        <MenuItem as='a' href='#'>Sepolia</MenuItem>
+                                        <MenuItem as='a' href='#'>Arbitrum Goerli</MenuItem>
+                                        <MenuItem as='a' href='#'>Polygon Mumbai</MenuItem>
+                                    </MenuList>
+                            </Menu>
+                        </Box>
                        <ConnectButton />
                     </Stack>
                 </DrawerBody>
@@ -135,16 +142,33 @@ export default function NavBar(props) {
     const toggle = () => {
         setIsOpen(!isOpen)
     }
+    
+    const {isConnected} = useAccount();
 
     return (
         <>
             <NavBarContainer {...props}>
-                <Logo width={["100px", "120px"]} height='auto' />
-                <MenuLinksBox background="#FFF" width="50%">
-                    <MenuItem to="/">Home</MenuItem>
-                    <MenuItem to="/mint">Compose and Mint</MenuItem>
-                    <MenuItem to="/governance">Governance</MenuItem>
-                    <MenuItem to='https://opensea.io' isExternal>Explore</MenuItem>
+                <Logo width={["100px", "120px"]} height='auto'/>
+                <MenuLinksBox background="#FFF" width="45%">
+                    <MenuItems to="/">Home</MenuItems>
+                    <MenuItems to="/mint">Compose and Mint</MenuItems>
+                        <Menu>
+                            <MenuButton
+                            fontSize="25px"
+                            color={"black"}
+                            fontFamily="Amatic SC"
+                            fontStyle="normal" 
+                            fontWeight={600}
+                            lineHeight="normal"
+                            letterSpacing="2px"
+                            textTransform="uppercase"
+                            >Explore Collection <ChevronDownIcon/></MenuButton>
+                                <MenuList fontFamily="Amatic SC">
+                                    <MenuItem as='a' href='https://opensea.io/' target="_blank">Sepolia</MenuItem>
+                                    <MenuItem as='a' href='https://opensea.io/' target="_blank">Arbitrum Goerli</MenuItem>
+                                    <MenuItem as='a' href='https://testnets.opensea.io/collection/wonderland-wanderers-10' target="_blank">Polygon Mumbai</MenuItem>
+                                </MenuList>
+                        </Menu>
                 </MenuLinksBox>
                 <Box 
                 zIndex={2}
@@ -154,6 +178,7 @@ export default function NavBar(props) {
                     zIndex={2}
                     height="35px"
                     mt={4}
+                    display={{ base: isConnected ? 'block' : 'none', md: "block", lg: "block" }}
                 >
                     <ConnectButton
                         accountStatus={{ smallScreen: 'avatar', largeScreen: 'avatar', }}

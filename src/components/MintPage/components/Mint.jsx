@@ -139,6 +139,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
         return metadata;
     }
 
+    const [itemDoesExist, setDoesExist] = useState(false);
 
     async function checkIfURIExists() {
         const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
@@ -169,6 +170,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
             functionName: "itemExists",
             args: [imageUrl]
         })
+        console.log(doesExist)
         return doesExist;
     }
 
@@ -176,18 +178,25 @@ export default function MintButton({ selectedTraits, stageRef }) {
         if (!isButtonDisabled && isConnected) {
             toast({
                 title: "Checking for item availability...",
-                description: "You can proceed with the Mint or wait to confirm if the item is available.",
+                description: "This should take a few seconds, If item is unique you'll be able to mint soon, else the transaction will be reverted.",
                 status: "info",
                 duration: 6000,
                 isClosable: true,
             });
-
+            
             const doesExist = await checkIfURIExists();
+            setDoesExist(doesExist);
+
+            if(doesExist){
+                setMessage("Something Went Wrong Pls ")
+                setIsMinting(false);
+                setIsSuccess(false);
+            }
 
             toast({
                 title: doesExist ? "Item already exists!" : "Item is Available!",
                 description: doesExist
-                    ? "Sorry, but this Wanderer has already been minted, your transaction will fail !!"
+                    ? "Sorry, but this Wanderer has already been minted, transaction reverted !!"
                     : "Your Wanderer is unique, proceed with Mint!",
                 status: doesExist ? "error" : "success",
                 duration: 5000,
@@ -195,8 +204,6 @@ export default function MintButton({ selectedTraits, stageRef }) {
             });
         }
     }
-
-
 
 
     // Prepare contract write configuration
@@ -238,7 +245,7 @@ export default function MintButton({ selectedTraits, stageRef }) {
 
     // Write mint contract
     async function writeMintContract(request) {
-        setMessage("Waiting for wallet confirmation.");
+        setMessage("Please, confirm transaction in your wallet.");
         const { hash } = await writeContract(request);
         setMessage("Transaction confirmed, awaiting status");
         return hash;
@@ -288,10 +295,10 @@ export default function MintButton({ selectedTraits, stageRef }) {
             setIsMinting(true);
             openModalWithMessage();
             await mintAndCheckAvailability();
+            console.log(itemDoesExist);
             const metaDataObject = await uploadMetadataToIPFSAndReturnURI();
             const metaDataURL = metaDataObject.url;
             const imageUrl = metaDataObject.data.image.href;
-            console.log(imageUrl)
             const request = await prepareContractWrite(metaDataURL, imageUrl);
             try {
                 const hash = await writeMintContract(request);
@@ -356,9 +363,6 @@ export default function MintButton({ selectedTraits, stageRef }) {
                                 <span>{!isMinting && isSuccess ? <Icon as={BsFillCheckCircleFill} color="#5FC95D" boxSize={3} /> : null}{message}{!isMinting && !isSuccess ? <Link onClick={handleMintButtonClick} color={"blue.500"}>Try Again</Link> : null}{isMinting ? "..." : "."}</span>
                                 {!isMinting && isSuccess ?
                                     <VStack spacing={3}>
-                                        {/* <Link href="/governance">
-                                            <Button background="#5FC95D" borderRadius="24px" boxShadow="6px 7px 0px 0px rgba(0, 0, 0, 0.8)">Propose/Vote In Governance</Button>
-                                        </Link> */}
                                         <Link href={`https://testnets.opensea.io/assets/${currentChain}/${currentContractAddress}/${tokenId}`} isExternal color={"blue.500"} textDecoration="underline">View Your Wanderer On OpenSea</Link>
                                     </VStack>
                                     : null}
