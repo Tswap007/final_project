@@ -1,11 +1,11 @@
 import Sections from "./components/Sections";
 
 import S1Image from "../assets/s1bg.svg"
-import S1Overlay from "../assets/s1overlay.svg"
+import S1Overlay from "../assets/s1overlay.png"
 import S2Image from "../assets/s2bg.svg"
-import S2Overlay from "../assets/s2overlay.svg"
+import S2Overlay from "../assets/s2overlay.png"
 import S3Image from "../assets/s3bg.svg"
-import S3Overlay from "../assets/s3overlay.svg"
+import S3Overlay from "../assets/s3overlay.png"
 
 import S2cloud from "../assets/s2Cloud.svg"
 

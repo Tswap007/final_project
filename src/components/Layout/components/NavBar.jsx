@@ -49,6 +49,16 @@ function MenuLinks({ isOpen, onClose }) {
                         <MenuItems to="/mint">Compose And Mint</MenuItems>
                         <Box fontFamily="Amatic SC" >
                             <Menu>
+                                <MenuButton fontSize={['16px', '20px', '24px']} color={{base:"white", md:"white", lg:"black"}}>Governance<ChevronDownIcon/></MenuButton>
+                                    <MenuList>
+                                        <MenuItem as='a' href='#'>Sepolia Dao</MenuItem>
+                                        <MenuItem as='a' href='#'>Arbitrum Goerli Dao</MenuItem>
+                                        <MenuItem as='a' href='#'>Polygon Mumbai Doa</MenuItem>
+                                    </MenuList>
+                            </Menu>
+                        </Box>
+                        <Box fontFamily="Amatic SC" >
+                            <Menu>
                                 <MenuButton fontSize={['16px', '20px', '24px']} color={{base:"white", md:"white", lg:"black"}}>Explore Collection <ChevronDownIcon/></MenuButton>
                                     <MenuList>
                                         <MenuItem as='a' href='#'>Sepolia</MenuItem>
@@ -149,10 +159,27 @@ export default function NavBar(props) {
         <>
             <NavBarContainer {...props}>
                 <Logo width={["100px", "120px"]} height='auto'/>
-                <MenuLinksBox background="#FFF" width="45%">
+                <MenuLinksBox background="#FFF" width="57%">
                     <MenuItems to="/">Home</MenuItems>
                     <MenuItems to="/mint">Compose and Mint</MenuItems>
-                        <Menu>
+                    <Menu>
+                            <MenuButton
+                            fontSize="25px"
+                            color={"black"}
+                            fontFamily="Amatic SC"
+                            fontStyle="normal" 
+                            fontWeight={600}
+                            lineHeight="normal"
+                            letterSpacing="2px"
+                            textTransform="uppercase"
+                            >Governance <ChevronDownIcon/></MenuButton>
+                                <MenuList fontFamily="Amatic SC">
+                                    <MenuItem as='a' href='https://opensea.io/' target="_blank">Sepolia</MenuItem>
+                                    <MenuItem as='a' href='https://opensea.io/' target="_blank">Arbitrum Goerli</MenuItem>
+                                    <MenuItem as='a' href='https://testnets.opensea.io/collection/wonderland-wanderers-10' target="_blank">Polygon Mumbai</MenuItem>
+                                </MenuList>
+                    </Menu>
+                    <Menu>
                             <MenuButton
                             fontSize="25px"
                             color={"black"}
@@ -168,7 +195,7 @@ export default function NavBar(props) {
                                     <MenuItem as='a' href='https://opensea.io/' target="_blank">Arbitrum Goerli</MenuItem>
                                     <MenuItem as='a' href='https://testnets.opensea.io/collection/wonderland-wanderers-10' target="_blank">Polygon Mumbai</MenuItem>
                                 </MenuList>
-                        </Menu>
+                    </Menu>
                 </MenuLinksBox>
                 <Box 
                 zIndex={2}

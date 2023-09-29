@@ -4,7 +4,6 @@ import Noise from "../../../bg/noise.svg";
 import HeaderTop from "../../assets/texttop.svg";
 import { Clouds } from "../../Layout/components/NavBar";
 import { useInView } from "react-intersection-observer";
-import { useState } from "react";
 
 // SectionImage component with animation
 function SectionImage({ sectionImage, sectionOverlayImage, zIndex, left, animationDirection }) {
@@ -66,7 +65,6 @@ function SectionDetails({ header, description, buttonText, to = "/", isExternal 
                 letterSpacing={{ base: "1.5px", md: "2.5px" }}
                 textTransform="lowercase"
                 fontWeight={700}
-                // color={"blackAlpha.800"}
                 lineHeight={1.5}
                 textAlign={["center", "center", "left", "left"]}
                 pl={{ lg: 10 }}
