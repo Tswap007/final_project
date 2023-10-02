@@ -33,9 +33,11 @@ export default function Home() {
     bg: "#7149C6", // previous F3EAC6
     left: "39%",
     isDropDown: true,
-    menuLinkOne: "",
-    menuLinkTwo: "",
-    menuLinkThree: "",
+    menuLinkOne: "https://www.tally.xyz/gov/wonderland-wanderers-sepolia-dao",
+    menuLinkTwo:
+      "https://www.tally.xyz/gov/wonderland-wanderers-arbitrum-goerli-dao",
+    menuLinkThree:
+      "https://www.tally.xyz/gov/wonderland-wanderers-polygon-mumbai-dao",
     menuTextOne: "Sepolia DAO",
     menuTextTwo: "Arbitrum Goerli DAO",
     menuTextThree: "Polygon Mumbai DAO",
@@ -52,9 +54,12 @@ export default function Home() {
     bg: "#7149C6", // previous 70EC6E
     left: "39%",
     isDropDown: true,
-    menuLinkOne: "",
-    menuLinkTwo: "",
-    menuLinkThree: "",
+    menuLinkOne:
+      "https://testnets.opensea.io/collection/wonderland-wanderers-14",
+    menuLinkTwo:
+      "https://testnets.opensea.io/collection/wonderland-wanderers-15",
+    menuLinkThree:
+      "https://testnets.opensea.io/collection/wonderland-wanderers-16",
     menuTextOne: "Sepolia",
     menuTextTwo: "Arbitrum Goerli",
     menuTextThree: "Polygon Mumbai",

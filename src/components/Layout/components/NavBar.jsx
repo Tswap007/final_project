@@ -103,13 +103,25 @@ function MenuLinks({ isOpen, onClose }) {
                   <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://www.tally.xyz/gov/wonderland-wanderers-sepolia-dao"
+                    target="_blank"
+                  >
                     Sepolia Dao
                   </MenuItem>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://www.tally.xyz/gov/wonderland-wanderers-arbitrum-goerli-dao"
+                    target="_blank"
+                  >
                     Arbitrum Goerli Dao
                   </MenuItem>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://www.tally.xyz/gov/wonderland-wanderers-polygon-mumbai-dao"
+                    target="_blank"
+                  >
                     Polygon Mumbai Doa
                   </MenuItem>
                 </MenuList>
@@ -124,13 +136,25 @@ function MenuLinks({ isOpen, onClose }) {
                   Explore Collection <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://testnets.opensea.io/collection/wonderland-wanderers-14"
+                    target="_blank"
+                  >
                     Sepolia
                   </MenuItem>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://testnets.opensea.io/collection/wonderland-wanderers-15"
+                    target="_blank"
+                  >
                     Arbitrum Goerli
                   </MenuItem>
-                  <MenuItem as="a" href="#" target="_blank">
+                  <MenuItem
+                    as="a"
+                    href="https://testnets.opensea.io/collection/wonderland-wanderers-16"
+                    target="_blank"
+                  >
                     Polygon Mumbai
                   </MenuItem>
                 </MenuList>
@@ -245,18 +269,26 @@ export default function NavBar(props) {
               Governance <ChevronDownIcon />
             </MenuButton>
             <MenuList fontFamily="Amatic SC">
-              <MenuItem as="a" href="https://opensea.io/" target="_blank">
-                Sepolia
-              </MenuItem>
-              <MenuItem as="a" href="https://opensea.io/" target="_blank">
-                Arbitrum Goerli
+              <MenuItem
+                as="a"
+                href="https://www.tally.xyz/gov/wonderland-wanderers-sepolia-dao"
+                target="_blank"
+              >
+                Sepolia DAO
               </MenuItem>
               <MenuItem
                 as="a"
-                href="https://testnets.opensea.io/collection/wonderland-wanderers-10"
+                href="https://www.tally.xyz/gov/wonderland-wanderers-arbitrum-goerli-dao"
                 target="_blank"
               >
-                Polygon Mumbai
+                Arbitrum Goerli DAO
+              </MenuItem>
+              <MenuItem
+                as="a"
+                href="https://www.tally.xyz/gov/wonderland-wanderers-polygon-mumbai-dao"
+                target="_blank"
+              >
+                Polygon Mumbai DAO
               </MenuItem>
             </MenuList>
           </Menu>
@@ -274,15 +306,23 @@ export default function NavBar(props) {
               Explore Collection <ChevronDownIcon />
             </MenuButton>
             <MenuList fontFamily="Amatic SC">
-              <MenuItem as="a" href="https://opensea.io/" target="_blank">
+              <MenuItem
+                as="a"
+                href="https://testnets.opensea.io/collection/wonderland-wanderers-14"
+                target="_blank"
+              >
                 Sepolia
               </MenuItem>
-              <MenuItem as="a" href="https://opensea.io/" target="_blank">
+              <MenuItem
+                as="a"
+                href="https://testnets.opensea.io/collection/wonderland-wanderers-15"
+                target="_blank"
+              >
                 Arbitrum Goerli
               </MenuItem>
               <MenuItem
                 as="a"
-                href="https://testnets.opensea.io/collection/wonderland-wanderers-10"
+                href="https://testnets.opensea.io/collection/wonderland-wanderers-16"
                 target="_blank"
               >
                 Polygon Mumbai
