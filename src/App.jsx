@@ -16,7 +16,6 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  //start here have the load come up just once maybe by allowing easy switching between pages
   return (
     <>
       <Routes>
