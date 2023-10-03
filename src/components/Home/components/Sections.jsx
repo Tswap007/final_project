@@ -98,6 +98,7 @@ function SectionDetails({
         textAlign={["center", "center", "left", "left"]}
         pl={{ lg: 10 }}
         pr={{ lg: 10 }}
+        color={"whiteAlpha.700"}
       >
         {description}
       </Text>
