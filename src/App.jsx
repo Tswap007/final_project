@@ -11,10 +11,12 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 6000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
+
+  //start here have the load come up just once maybe by allowing easy switching between pages
   return (
     <>
       <Routes>

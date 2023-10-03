@@ -27,7 +27,7 @@ import {
   readContract,
 } from "wagmi/actions";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import loadingGif from "../../assets/loadingGif.gif";
+import { LoadingImageTwo } from "../../LoadingScreen/components/Animation";
 import failedImage from "../../assets/failed_image.svg";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
@@ -378,26 +378,22 @@ export default function MintButton({ selectedTraits, stageRef }) {
           <ModalBody>
             <Center>
               <VStack spacing={3} mb={4}>
-                <Image
-                  src={
-                    isMinting ? loadingGif : isSuccess ? imageUrl : failedImage
-                  }
-                  alt={
-                    isMinting
-                      ? "LOGO ANIMATION"
-                      : isSuccess
-                      ? "Your Wanderer"
-                      : "Failed Status Image"
-                  }
-                  w={isMinting ? "40%" : isSuccess ? "60%" : "40%"}
-                  h="auto"
-                  borderRadius="10%"
-                  boxShadow={
-                    !isMinting && isSuccess
-                      ? "6px 5px 10px rgba(0, 0, 0, 0.8)"
-                      : null
-                  }
-                />
+                {isMinting ? (
+                  <LoadingImageTwo />
+                ) : (
+                  <Image
+                    src={isSuccess ? imageUrl : failedImage}
+                    alt={isSuccess ? "Your Wanderer" : "Failed Status Image"}
+                    w={isSuccess ? "60%" : "40%"}
+                    h="auto"
+                    borderRadius="10%"
+                    boxShadow={
+                      !isMinting && isSuccess
+                        ? "6px 5px 10px rgba(0, 0, 0, 0.8)"
+                        : null
+                    }
+                  />
+                )}
                 <span>
                   {!isMinting && isSuccess ? (
                     <Icon
