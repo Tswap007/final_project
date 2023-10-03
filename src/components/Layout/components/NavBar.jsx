@@ -30,7 +30,9 @@ import { useAccount } from "wagmi";
 function Logo(props) {
   return (
     <Box {...props}>
-      <Image src={logo} alt="LOGO" width="100%" height="auto" />
+      <Link href="/">
+        <Image src={logo} alt="LOGO" width="100%" height="auto" />
+      </Link>
     </Box>
   );
 }
