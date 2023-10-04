@@ -73,19 +73,18 @@ function LeftSide() {
 function RightSide() {
   return (
     <Box display={{ base: "none", md: "block" }} w={"40%"}>
-      <Center>
-        <Heading
-          fontWeight={600}
-          fontFamily="Amatic SC"
-          letterSpacing="6px"
-          color="white"
-          fontSize="25px"
-          pt="35px"
-          mb={4}
-        >
-          Built Using :
-        </Heading>
-      </Center>
+      <Heading
+        fontWeight={600}
+        fontFamily="Amatic SC"
+        letterSpacing="6px"
+        color="white"
+        fontSize="25px"
+        pt="35px"
+        mb={4}
+        ml={20}
+      >
+        Built Using
+      </Heading>
       <HStack
         fontFamily="Amatic SC"
         fontSize="20px"
@@ -147,7 +146,6 @@ function RightSide() {
             isExternal
             display="flex"
             alignItems="center"
-            w={"80%"}
           >
             <Text mr="2">Wagmi</Text>
             <Image src={WagmiLogo} w="10%" />
