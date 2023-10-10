@@ -138,7 +138,7 @@ function RightSide() {
             display="flex"
             alignItems="center"
           >
-            <Text mr="2">Canva</Text>
+            <Text mr="2">Art from Canva</Text>
             <Image src={CanvaLogo} w="8%" />
           </Link>
           <Link
