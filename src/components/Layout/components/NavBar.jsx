@@ -162,7 +162,9 @@ function MenuLinks({ isOpen, onClose }) {
                 </MenuList>
               </Menu>
             </Box>
-            <ConnectButton />
+            <Box display={{ base: "block", md: "none" }}>
+              <ConnectButton />
+            </Box>
           </Stack>
         </DrawerBody>
       </DrawerContent>
